@@ -1,0 +1,42 @@
+# Collection of useful Javascript functions
+- addcss.js
+  - Add css style to document head
+  - Returns appended style element
+- arrayequivalent.js
+  - Check if two arrays are equivalent (contain the same elements)
+- arrayshuffle.js
+  - Shuffle array and return the result
+- arraystoobj.js
+- between.js
+- clickit.js
+- clickpoint.js
+- downloaddata.js
+- dragelement.js
+- escapehtml.js
+- ignorecomments.js
+- inputit.js
+- isloaded_betterwait.js
+- isontop_getcenter.js
+- loadcss.js
+- loadscript.js
+- localcookie.js
+- makearray.js
+- makediv.js
+- minmax.js
+- mstotime.js
+- oneshot.js
+- pad2start.js
+- promiseprompt.css
+- promiseprompt.js
+- promisetimeout.js
+- Readme.md
+- scrollto.js
+- seededrandom.js
+- spark.css
+- spark.js
+- threestate.css
+- threestate.js
+- timediff.js
+- timenow.js
+- toggleslider.css
+- WORKINPROGRESS.js

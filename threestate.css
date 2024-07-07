@@ -1,0 +1,61 @@
+
+input[type="checkbox"].threestate {
+  --offborder: #888;
+  --midborder: #77f;
+  --onborder: #55c;
+
+  --offslider: #ccc;
+  --midslider: #77f;
+  --onslider: #55c;
+
+  --offbg: #777;
+  --midbg: #333;
+  --onbg: #ddd;
+
+  appearance: none;
+  display: inline-block;
+  width: 3em;
+  height: 1.5em;
+  padding: 0.5em;
+  line-height: 1em;
+  vertical-align: middle;
+  position: relative;
+  border: 0.1em solid var(--offborder);
+  border-radius: 1em;
+  background-color: var(--offbg);
+  transition: all 0.25s linear;
+
+  &[data-state="1"] {
+    border-color: var(--midborder);
+    background-color: var(--midbg);
+  }
+
+  &[data-state="2"] {
+    border-color: var(--onborder);
+    background-color: var(--onbg);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    display: block;
+    height: 1em;
+    width: 1em;
+    left: 0.15em;
+    top: 50%;
+    transform: translate(0, -50%);
+    border-radius: 1em;
+    background-color: var(--offslider);
+    transition: all 0.15s linear;
+  }
+
+  &[data-state="1"]::after {
+    left: calc(50% - 0.575em);
+    background-color: var(--midslider);
+  }
+
+  &[data-state="2"]::after {
+    left: calc(100% - 1.15em);
+    background-color: var(--onslider);
+  }
+}
