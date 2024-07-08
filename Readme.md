@@ -30,7 +30,7 @@
   - betterWait
     - resolve promise when condition becomes true
     - uses setTimeout and polling interval
-    - consider switching to requestAnimationFrame (https://css-tricks.com/using-requestanimationframe/)
+    - consider switching to [requestAnimationFrame](https://css-tricks.com/using-requestanimationframe/)
 - isontop_getcenter.js
   - isontop - check if element is on top (requires getcenter)
   - getcenter - get center coordinates of element
