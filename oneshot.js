@@ -1,7 +1,27 @@
+// one-shot function
+function oneshot() {
+  if (!oneshot.done) {
+    oneshot.done = true;
+    console.log("DO SOMETHING");
+  } else {
+    console.log(" do nothing");
+  }
+};
 
-// // one-shot function
+// oneshot can be reset if:
+// x = oneshot;
+// x()
+// -- DO SOMETHING
+// x()
+// -- do nothing
+// x.done = false;
+// x()
+// -- DO SOMETHING
 
-var oneshot = (function () {
+
+
+// this version of oneshot has an inaccessible "done" variable, so it is truly oneshot
+var oneshot2 = (function () {
   let done = false; // this value stays with the function object
   return function () { // this is the function that is assigned to oneshot
     if (!done) { // subsequent run will see this function object as  DONE
@@ -9,22 +29,7 @@ var oneshot = (function () {
       console.log("DO SOMETHING");
     } else {
       // no action
+      console.log("do nothing");
     }
   };
 })();
-// oneshot(); // "DO SOMETHING"
-// oneshot(); // (no action)
-// "done" variable is externally inaccessible, so this is truly one shot
-
-// Cleaner version? not declared as variable, so does not need to be put at the top
-function oneshot2() {
-  if (!oneshot2.done) {
-    oneshot2.done = true;
-    console.log("DO SOMETHING");
-  } else {
-    // no action
-    console.log(" do nothing");
-  }
-};
-
-

@@ -30,38 +30,22 @@ function betterWait(conditionFunction, { poll = 1000, timeout = 600000, stopper 
   let stopwatch = new Date().getTime();
   return new Promise((resolve, reject) => {
     function checkstatus() {
-      // console.log("polling");
       let newtime = new Date().getTime();
-      // console.log(timeout,newtime-stopwatch, newtime - stopwatch > timeout);
       let condresult = conditionFunction();
       if (condresult)
         resolve(condresult);
+      // stopper is an object so that it can be manipulated by unconnected functions
       if (stopper && stopper.stop) reject("STOP");
       else if (timeout > 0 && newtime - stopwatch > timeout)
         reject("TIMEOUT");
       else
         setTimeout(_ => checkstatus(), poll);
     }
-    checkstatus();
+    checkstatus(); // initialize the loop
   });
 }
 // HOW to use betterWait
 // stopvar = {};
 // betterWait(() => {return false}, {timeout:3000, stopper:stopvar}).then((e) => console.log("good", e)).catch((e) => console.log(e));
 
-
-
-function waitFor_original(conditionFunction, timeout = 0) {
-  let stopwatch = new Date().getTime();
-  const poll = resolve => {
-    let newtime = new Date().getTime();
-    // console.log(timeout,newtime-stopwatch, newtime - stopwatch > timeout);
-    if (stophelpvid)
-      resolve(false);
-    else if (conditionFunction()) resolve(true);
-    else if (timeout > 0 && newtime - stopwatch > timeout) resolve(false);
-    else setTimeout(_ => poll(resolve), pollinginterval);
-  };
-  return new Promise(poll);
-}
 

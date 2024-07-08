@@ -1,10 +1,8 @@
 
-// direct cutoutfrom helpvideo.js
-// improved - use this for basicutilities
 function spark(x, y, { interval = 1000, anchor = document.body, ssize = "1.25em", color = "green" } = {}) {
   return new Promise((resolve) => {
     let spk = document.createElement("div");
-    spk.id = "sparky";
+    spk.id = "spark";
     spk.style.left = x;
     spk.style.top = y;
     spk.style.borderColor = color;
