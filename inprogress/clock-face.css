@@ -1,0 +1,180 @@
+
+clock-face, .clock-face, [is="clock-face"] {
+  .digital {
+    display:inline-block;
+    text-align: center;
+    cursor: pointer;
+    
+    & input {
+      appearance: none;
+      /* background: blue; */
+      pointer-events: all;
+
+    }    
+  }
+}
+
+.corcledisplayer {
+  --basesize: 12em;
+  --bordersize: 5px;
+  z-index:150;
+  position: fixed;    
+  top: 20%;
+  left:50%;
+  transform: translate(-50%);
+  background:var(--bodybg);
+  border:solid 2px var(--calborder);
+  border-radius: 0.5em;
+  width: calc(var(--bordersize)*2 + var(--basesize));
+  /* height: calc(1.5em + var(--basesize)); */
+  padding:0.25em;
+
+.corcletitle, .corcletimeshow {
+  color:var(--bodyfg);
+  text-align: center;
+  padding:0.25em;
+}
+
+
+.corcle {
+  & {
+    --dotsize: calc(var(--basesize) / 6);
+    position:relative;
+    /* z-index:155; */
+    user-select: none;
+    display: block;
+    width: var(--basesize);
+    height: var(--basesize);
+    clip-path: circle(calc(var(--basesize)/2 + 2px) at center);
+    border: var(--bordersize) var(--calborder) solid;
+    background: var(--bodybg);
+    border-radius: 50%;
+    text-align: center;
+    /* font-size: calc(var(--basesize) / 9); */
+    cursor: auto;
+    user-select: none;
+  }
+
+  /* &:active {
+    cursor: none;
+  } */
+
+  .face-hr,
+  .face-min {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    clip-path: circle(calc(var(--basesize)/2 + 2px) at center);
+    border-radius: 50%;
+    background: var(--bodybg);
+    pointer-events: auto;
+  }
+
+  :is(.face-hr, .face-min).conceal {
+    /* transform: scale(0.8); */
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .dot.minx {
+    /* background: var(--bodybg); */
+    z-index: 152;
+    opacity:0;
+    transition: none!important;;
+  }
+
+  .dot.min {
+    z-index: 151;
+  }
+
+
+  .dot.active {
+    opacity:1;
+    background-color: var(--calbtnactive);
+
+    &::after {
+      color:var(--bodybg);
+    }
+  }
+
+  .hand {
+    pointer-events: none;
+    position: absolute;
+    /* height: calc(50% - var(--dotsize) * 0.7 - 0.5vw); */
+    width: 2px;
+    background: var(--menubg);
+    left: 50%;
+    top: 50%;
+    transform-origin: top;
+  }
+
+  .handdot {
+    position: absolute;
+    transform-origin: center center;
+    top: 100%;
+    transform: translate(-50%) scale(0);
+    height: calc(var(--basesize) / 20);
+    width: calc(var(--basesize) / 20);
+    background: none;
+    border: solid 2px var(--menufg);
+    border-radius: 50%;
+    /* z-index: 400; */
+  }
+
+  /* &:hover:active *, */
+  &.interactive * {
+    transition: none !important;
+  }
+
+  &:hover:active .hand {
+    background: var(-menufg);
+
+    .handdot {
+      /* background: var(--menubg); */
+      transform: translate(-50%) scale(1);
+    }
+  }
+
+  .dot {
+    cursor:pointer;
+    position: absolute;
+    border-radius: 50%;
+    /* background: var(--calbtnbg); */
+    font-size: 100%;
+    height: var(--dotsize);
+    width: var(--dotsize);
+    display: inline-block;
+    margin: calc(0px - var(--dotsize) / 2);
+    /* line-height: 1.5em; */
+    /*margin: calc(
+  0px - var(--dotsize) / 2
+); this is so positioning is "centered" - done in code */
+    /* height: var(--dotsize);
+width: var(--dotsize); */
+  }
+
+  /* .dot::before {
+    content: attr(data-angle);
+    display: block;
+    position: absolute;
+    text-align: center;
+    background: #111;
+    bottom: 0;
+    transform: translate(0, -50%);
+    color: #fff;
+    font-size: 1rem;
+  } */
+
+  .dot::after {
+    content: attr(data-dot-number);
+    display: block;
+    position: relative;
+    top: 55%;
+    transform: translate(0, -50%);
+    color: var(--calbtnbg);
+  }
+}
+
+}

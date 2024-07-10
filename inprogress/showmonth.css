@@ -1,0 +1,152 @@
+:root {
+  --bodybg: #333;
+  --bodyfg: var(--bs-body-color);
+  --linkcolor: var(--bs-link-color);
+
+  --today: #f91;
+
+  --calhover: #3cf9;
+  --calnoshifthover: #234;
+  --calselected: #cf37;
+  
+  --tableborder: #88a;
+
+
+}
+
+
+.calfade,
+.calfade::before {
+  opacity: 0.25;
+}
+
+.calholder {
+  --blocksize: 3em;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 2em;
+  width: 100%;
+}
+
+#calnavigator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  z-index:10;
+  button,
+  #navcal {
+    display: inline-block;
+    cursor: pointer;
+  }
+  #navcal {
+    flex-grow: 0.85;
+  }
+}
+
+.monthrow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  position: relative;
+  /*grid-template-columns: 1fr 1fr 1fr;*/
+  /* transition: all 0.5s; */
+  left: 0;
+
+}
+
+.monthblock {
+  position: relative;
+  display: grid;
+  margin: calc(var(--blocksize) / 10);
+  grid-template-columns: repeat(7, 1fr);
+  user-select: none;
+  align-content: start;
+
+  &:has(~ .month) {
+    margin-right: 1em;
+  }
+
+  .dayhead {
+    text-align: center;
+    text-transform: lowercase;
+  }
+
+  .day {
+    position: relative;
+    display: inline-block;
+    width: var(--blocksize);
+    height: var(--blocksize);
+    text-align: center;
+    line-height: var(--blocksize);
+    border: solid 0.5px var(--tableborder);
+    cursor: pointer;
+
+    &::before {
+      content: attr(data-day);
+    }
+
+    &:hover {
+      background-color: var(--calhover);
+      opacity: 1;
+    }
+
+    &:not([data-blockid]):hover {
+      background-color: var(--calnoshifthover);
+    }
+
+    &.selecteddate {
+      background-color: var(--calselected);
+    }
+
+    &.today {
+      color: var(--today);
+    }
+
+
+    .slotplus,
+    .slotminus {
+      display: none;
+    }
+  }
+
+  &::before {
+    content: attr(data-month);
+    grid-column: 1 / span 7;
+    text-align: center;
+    font-size: 1.25em;
+    margin-bottom: 0.5em;
+  }
+}
+
+
+/* For smaller screens, or mobile touch device */
+@media only screen and (max-width: 500px),
+  screen and (max-width: 500px) and (pointer: coarse) {
+  body {
+    font-size: 3.5vw;
+  }
+}
+
+.flexholder {
+  display: none;
+}
+
+@media only screen and (min-width: 992px) {
+  .calholder {
+    flex-direction: row;
+  }
+  .flexholder {
+    display: block;
+  }
+}
+
+
+
