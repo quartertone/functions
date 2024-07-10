@@ -42,12 +42,20 @@
   - set/read/delete "cookie" stored in localstorage
 - makearray.js
   - convenience function to create an array of x numbers, or an array with values between x and y
+- makedimbg.js
+  - place translucent screen over everything. responds to click events. (useful for pulling attention to floating window)
 - makediv.js
   - convenience function to create DIV element
 - minmax.js
   - get random integer between min/max, inclusive
-- mstotime.js
-  - convert milliseconds to time (H:m:s)
+- numtodate_isodate.js
+  - numtodate - convert string date into Date object
+  - isodate - return yyyy-mm-dd format of date object
+  - datecalc - take Date object (or yyyy-mm-dd) and return new Date object after doing date math
+  - timenow - return local time
+  - timediff - return time difference to the closest hour
+    - TODO: make this more generalizable (granularity options)
+  - mstotime - convert milliseconds to time (H:m:s)
 - oneshot.js
   - one-shot function
   - one version can be "reset"
@@ -71,12 +79,6 @@
   - three-state slider
 - threestate.css
   - stylsheet for three state slider
-- timediff.js
-  - return time difference to the closest hour
-  - TODO: make this more generalizable (granularity options)
-- timenow.js
-  - return local time
-  - (file contains other functions that rely on momentjs. TODO: convert these to vanilla)
 - toggleslider.css
   - stylesheet for slider-style checkbox
 - WORKINPROGRESS.js

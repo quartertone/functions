@@ -1,14 +1,19 @@
 
 // PROMISEd prompt box
+// requires makedimbg.js
+
 function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext = "Ok", canceltext = "Cancel", id = "promiseprompt", confirm = false, html = false, okfn = async function () { return true; } } = {}) {
   // Note: deconstructed object can be passed as a regular object
   return new Promise((resolve, reject) => {
-    let dimbg = document.createElement("div");
-    dimbg.style = "position:fixed; top:0;left:0;right:0;bottom:0; background:#4447;z-index:1000;";
-    dimbg.onclick = () => {
-      closeit();
-      resolve(false);
-    };
+
+    let dimbg = makedimbg({
+      onclickfn: () => {
+        closeit();
+        resolve(false);
+      }
+    });
+
+
     let promptbox = document.createElement("div");
     // promptbox.style = style;
     promptbox.id = id;
@@ -39,6 +44,7 @@ function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext =
     cxlbtn.onclick = () => {
       closeit();
       resolve(false);
+      // TODO :consider switching this to "reject"
     };
     let okbtn = document.createElement("button");
     okbtn.id = "promise_ok";

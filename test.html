@@ -1,15 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+
+
+  <script src="numtodate_isodate.js"></script>
+  <script src="promiseprompt.js"></script>
+  <script src="makedimbg.js"></script>
+  <script src="spark.js"></script>
+  <script src="oneshot.js"></script>
   <script src="makearray.js"></script>
+  <script src="isloaded_betterwait.js"></script>
+  <script src="escapehtml.js"></script>
+  <script src="arraystoobj.js"></script>
+  <script src="arrayshuffle.js"></script>
+  <script src="arrayequivalent.js"></script>
+  <script src="addcss.js"></script>
+  <script src="makediv.js"></script>
+  <script src="between.js"></script>
+  <script src="WORKINPROGRESS.js"></script>
+  <script src="dragelement.js"></script>
+  <script src="localcookie.js"></script>
+  <script src="downloaddata.js"></script>
+  <script src="promisetimeout.js"></script>
+  <script src="inputit.js"></script>
+  <script src="clickpoint.js"></script>
+  <script src="clickit.js"></script>
+  <script src="loadscript.js"></script>
+  <script src="loadcss.js"></script>
+  <script src="isontop_getcenter.js"></script>
+  <script src="scrollto.js"></script>
+  <script src="threestate.js"></script>
+  <script src="pad2start.js"></script>
+  <script src="minmax.js"></script>
+  <script src="seededrandom.js"></script>
+
+  <link rel="stylesheet" href="toggleslider.css" />
+  <link rel="stylesheet" href="promiseprompt.css" />
+  <link rel="stylesheet" href="spark.css" />
+  <link rel="stylesheet" href="threestate.css" />
+
+
+  <link rel="stylesheet" href="inprogress/circlemenujs.css" />
+  <script src="inprogress/circlemenujs.js"></script>
+  <script src="inprogress/full-time.js"></script>
+  <script src="inprogress/clock-face.js"></script>
+  <link rel="stylesheet" href="inprogress/clock-face.css" />
+  <link rel="stylesheet" href="inprogress/gridcal.css" />
+  <link rel="stylesheet" href="inprogress/showmonth.css" />
+  <script src="inprogress/gridcal_new.js"></script>
+  <script src="inprogress/showmonth.js"></script>
+
 </head>
+
 <body>
+
+  <grid-cal value="2024-05-11" title="Calendar Title">Some calendar</grid-cal>
+
+
   <div id="out"></div>
   <script>
     let out = document.querySelector("#out");
+    showmonth({ anchor: out, precal: 1 })
   </script>
 </body>
+
 </html>
