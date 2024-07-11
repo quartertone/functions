@@ -34,6 +34,11 @@ echo "<link rel='stylesheet' href='$cssfile' />\n";
   <grid-cal value="2024-05-11" data-noshow="true" data-locale="en" title="CALENDRA"></grid-cal>
 
   <div id="out"></div>
+
+
+  <shadow-cal value="2024-05-11" data-noshow="true" data-locale="en" title="CALENDRA"></shadow-cal>
+
+
   <script>
     let out = document.querySelector("#out");
     showmonth({ anchor: out, precal: 0 , clickfn:myclickfn})

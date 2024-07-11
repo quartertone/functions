@@ -18,6 +18,7 @@ customElements.define("grid-cal", class GridCalendar extends HTMLElement {
 
   set value(val) {
     this._value = val;
+    this.setAttribute("value", val);
     // if (!this.dataset.noshow) 
     this.innerHTML = val ? val : this.title; // if noshow is set, don't populate innerHTML with date
 
@@ -40,13 +41,11 @@ customElements.define("grid-cal", class GridCalendar extends HTMLElement {
     let basethis = this;
 
     // if (!this.dataset.noshow) 
-    this.innerHTML = this.title?  this.title :"_GRIDCAL_";
+    this.innerHTML = this.title ? this.title : "_GRIDCAL_";
 
     let locale = this.dataset.locale ?? "default";
 
-// TODO - wtf how to get .value??
-// console.log(this.getAttribute("value"));
-basethis.initialvalue = this.getAttribute("value");
+    basethis.initialvalue = this.getAttribute("value");
 
 
     function sendinput(value) {
@@ -119,7 +118,7 @@ basethis.initialvalue = this.getAttribute("value");
 
       document.body.appendChild(calendarbox);
 
-      showmonth({ refdate: basethis.value, anchor: calendarbox, classes: "floatingcal", locale: locale, clickfn: clickedfn });
+      showmonth({ refdate: basethis.value??basethis.initialvalue, anchor: calendarbox, classes: "floatingcal", locale: locale, clickfn: clickedfn });
 
 
       setTimeout(function () {

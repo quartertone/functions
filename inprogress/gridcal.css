@@ -1,156 +1,174 @@
-
 :root {
+  --basecolor: 240;
+  --darkness: 1;
+  --saturation: 1;
 
---basecolor: 240;
---darkness: 1;
---saturation: 1;
+  --calbg: #000;
+  --calborder: hsl(
+    var(--basecolor),
+    calc(var(--saturation) * 20%),
+    calc(var(--darkness) * 78%)
+  );
+  --calbtnbg: hsl(
+    var(--basecolor),
+    calc(var(--saturation) * 100%),
+    calc(var(--darkness) * 87%)
+  );
+  --calbtnfg: hsl(
+    var(--basecolor),
+    calc(var(--saturation) * 11%),
+    calc(var(--darkness) * 29.8%)
+  );
+  --calbtnhover: hsl(
+    var(--basecolor),
+    calc(var(--saturation) * 100%),
+    calc(var(--darkness) * 83.5%)
+  );
+  --calbtnactive: hsl(
+    calc(var(--basecolor) - 190),
+    calc(var(--saturation) * 100%),
+    calc(var(--darkness) * 65%)
+  );
 
---calbg: #000;
---calborder:  hsl(var(--basecolor), calc(var(--saturation) * 20%), calc(var(--darkness) * 78%)); 
---calbtnbg: hsl(var(--basecolor), calc(var(--saturation) * 100%), calc(var(--darkness) * 87%)); 
---calbtnfg: hsl(var(--basecolor), calc(var(--saturation) * 11%), calc(var(--darkness) * 29.8%)); 
---calbtnhover: hsl(var(--basecolor), calc(var(--saturation) * 100%), calc(var(--darkness) * 83.5%));
---calbtnactive: hsl(calc(var(--basecolor) - 190), calc(var(--saturation) * 100%), calc(var(--darkness) * 65%));
-
---dimbg:  #444b; 
-
---fadespeed: 0.2s;
-
+  --fadespeed: 0.2s;
 }
 
-
-
 .floatingcalbox {
-	/* z-index: 1001; */
-	background: var(--calbg);
-	position: fixed;
-	top: 20%;
-	left: 50%;
-	transform: translate(-50%);
-	width: auto;
-	border: 0.01em solid var(--calborder);
+  /* z-index: 1001; */
+  background: var(--calbg);
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%);
+  width: auto;
+  border: 0.01em solid var(--calborder);
   user-select: none;
 }
 
 .floatingcal {
   /* z-index:1000; */
-	width: 100%;
-	border-collapse: collapse;
-	display: grid;
-	grid-template-areas:
-		'caption caption caption caption caption caption caption'
- 		'wayback littleback monthheader monthheader monthheader littlefwd wayfwd';
- 
+  width: 100%;
+  border-collapse: collapse;
+  display: grid;
+  grid-template-areas:
+    "caption caption caption caption caption caption caption"
+    "wayback littleback monthheader monthheader monthheader littlefwd wayfwd";
 }
 
 .floatingcal div {
-	border: 0.01em solid rgba(0, 0, 0, 0.8);
-	text-align: center;
-	position: relative;
-	text-align: center;
-	vertical-align: middle;
+  border: 0.01em solid rgba(0, 0, 0, 0.8);
+  text-align: center;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .floatingcal .calbtns {
-	line-height: 1.5em;
-	cursor: pointer;
-	background: var(--calbtnbg);
-	border: 0.001em solid var(--calbg);
-	color: var(--calbtnfg);
+  line-height: 1.5em;
+  cursor: pointer;
+  background: var(--calbtnbg);
+  border: 0.001em solid var(--calbg);
+  color: var(--calbtnfg);
 }
 
 .floatingcal .calday {
-	background: var(--calbtnbg);
-	border: 0.001em solid var(--calbg);
-	color: var(--calbtnfg);
-	height: 2em;
-	width: 2em;
-	line-height: 2em;
-	cursor: pointer;
-	font-weight: normal;
-	font-size: 95%;
-	margin:0; padding:0;
+  background: var(--calbtnbg);
+  border: 0.001em solid var(--calbg);
+  color: var(--calbtnfg);
+  height: 2em;
+  width: 2em;
+  line-height: 2em;
+  cursor: pointer;
+  font-weight: normal;
+  font-size: 95%;
+  margin: 0;
+  padding: 0;
 }
-
-
 
 .floatingmonth {
-	width: 100%;
-	border-collapse: collapse;
-	display: grid;
-	grid-template-areas:
-		'gridmonth gridmonth gridmonth gridmonth'; 
+  width: 100%;
+  border-collapse: collapse;
+  display: grid;
+  grid-template-areas: "gridmonth gridmonth gridmonth gridmonth";
+
+  div {
+    border: 0.01em solid rgba(0, 0, 0, 0.8);
+    text-align: center;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .gridmonth {
+    background: var(--calbtnbg);
+    border: 0.001em solid var(--calbg);
+    color: var(--calbtnfg);
+    height: 2.5em;
+    width: 2.5em;
+    line-height: 2.5em;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+  }
 }
 
-.floatingmonth div {
-	border: 0.01em solid rgba(0, 0, 0, 0.8);
-	text-align: center;
-	position: relative;
-	text-align: center;
-	vertical-align: middle;
+.floatingcal :is(.calday, .calbtns, .gridmonth):hover {
+  background: var(--calbtnhover);
 }
 
-
-.floatingmonth .gridmonth {
-	background: var(--calbtnbg);
-	border: 0.001em solid var(--calbg);
-	color: var(--calbtnfg);
-	height: 2.5em;
-	width: 2.5em;
-	line-height: 2.5em;
-	cursor: pointer;
-	font-weight: normal;
-	font-size: 100%;
-	margin:0; padding:0;
-}
-
-
-
-  .floatingcal :is(.calday,.calbtns,.gridmonth):hover {
-	background: var(--calbtnhover);
-}
-
-
-
-
-.calday.calactive, .gridmonth.calactive  {
-	background: var(--calbtnactive);
+.calday.calactive,
+.gridmonth.calactive {
+  background: var(--calbtnactive);
 }
 
 #calcaption {
-	font-size: 70%;
-	text-align: center;
-	color: #fff;
-	height: 2.5em;
-	line-height: 1.25em;
+  font-size: 70%;
+  text-align: center;
+  color: #fff;
+  height: 2.5em;
+  line-height: 1.25em;
 }
 
 .floatingcal .calmonthheader {
-	font-size: 70%;
-	width: auto;
+  font-size: 70%;
+  width: auto;
 }
 
-#calcaption { grid-area: caption; cursor:pointer;}
-#calwayback { grid-area: wayback; }
-#callittlebcak { grid-area: littleback; }
-#calmonthheader { grid-area: monthheader; }
-#callittlefwd { grid-area: littlefwd; }
-#calwayfwd { grid-area: wayfwd; }
+#calcaption {
+  grid-area: caption;
+  cursor: pointer;
+}
+#calwayback {
+  grid-area: wayback;
+}
+#callittlebcak {
+  grid-area: littleback;
+}
+#calmonthheader {
+  grid-area: monthheader;
+}
+#callittlefwd {
+  grid-area: littlefwd;
+}
+#calwayfwd {
+  grid-area: wayfwd;
+}
 
 .wkday {
-	font-size: 80%;
+  font-size: 80%;
 }
 
 #caltodaybtn {
-	background: url("../img/cal_today.svg") no-repeat center;
-	background-size: 1.8em;
-	height: 2.5em;
-	width: 2.5em;
-	position: absolute;
-	top: 0;
-	right: 0;
+  background: url("../img/cal_today.svg") no-repeat center;
+  background-size: 1.8em;
+  height: 2.5em;
+  width: 2.5em;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .calday.istoday {
-	border-radius: 0.5em;
+  border-radius: 0.5em;
 }
