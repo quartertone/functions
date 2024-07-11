@@ -1,5 +1,5 @@
-
-function loadCSS(url, id) { // load CSS file into head as link
+// - load CSSS file into head as link
+function loadCSS(url, id) {
   if (document.getElementById(id) == null) {
     let link = document.createElement("link");
     link.rel = "stylesheet";

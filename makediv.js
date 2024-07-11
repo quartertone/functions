@@ -1,5 +1,4 @@
-// convenience fn to create DIV element
-
+// - convenience fn to create DIV element
 function makediv(id, { tag = "div", cls = "", inner = "" } = {}) {
   let thisdiv = document.createElement(tag);
   thisdiv.id = id;

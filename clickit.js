@@ -1,7 +1,5 @@
-//not sure if this is really useful
-
-
-function clickit(element) { // simulate mousedown/mouseup/click event
+// - simulate mousedown/mouseup/click event on an element
+function clickit(element) {
   if (typeof element === "string") {
     // console.log("checking", el);
     element = document.querySelector(element);

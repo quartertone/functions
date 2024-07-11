@@ -1,4 +1,5 @@
-// bidirectional array equiv checker
+// - bidirectional array equiv checker
+// - Check if two arrays are equivalent (contain the same elements)
 function arrayequivalent(a, b) {
   let x = a.every((e) => {
     return b.includes(e);

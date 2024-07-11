@@ -1,5 +1,5 @@
-
-function loadScript(url, options, vnum) { // dynamically load JS
+// - dynamically load JS file
+function loadScript(url, options, vnum) {
   //options = ={id: null, anchor: null, defer: false, async: false};
   let script = document.createElement("script"); // create a script DOM node
   script.src = url + "?" + vnum; // set its src to the provided URL

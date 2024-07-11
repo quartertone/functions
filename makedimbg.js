@@ -1,5 +1,4 @@
-
-
+// - place translucent screen over everything. responds to click events. (useful for pulling attention to floating window)
 function makedimbg({ onoff = true, source, parentbox, onclickfn, fadetime = "0.5s" } = {}) {
   let dimbox;
 

@@ -1,7 +1,6 @@
 
-// PROMISEd prompt box
-// requires makedimbg.js
-
+// - interactive dialog that resolves to a promise. Requires makedimbg
+// - necessary styles in promiseprompt.css 
 function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext = "Ok", canceltext = "Cancel", id = "promiseprompt", confirm = false, html = false, okfn = async function () { return true; } } = {}) {
   // Note: deconstructed object can be passed as a regular object
   return new Promise((resolve, reject) => {

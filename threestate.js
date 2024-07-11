@@ -1,4 +1,5 @@
-
+// - three-state slider
+// - assocaited styles in threestate.css
 function threestate(target) {
   // usage:
   // .onclick = function() {threestate(this)}

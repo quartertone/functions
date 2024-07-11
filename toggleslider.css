@@ -1,4 +1,4 @@
-
+/* - stylesheet for slider-style checkbox */
 input[type="checkbox"].slider {
   --offborder: #888;
   --onborder: #55c;

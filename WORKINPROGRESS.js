@@ -1,5 +1,6 @@
-
-
+/*
+var function
+*/
 // CUSTOM COMPONENT: three-stage checkbox
 customElements.define("tri-check", class TriCheck extends HTMLInputElement {
   // state = -1;

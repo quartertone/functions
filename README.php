@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Readme</title>
+</head>
+
+<body>
+  <pre>
+<?php
+
+$jsfiles = array_merge(
+  glob("*.js"),
+  // glob("inprogress/*.js")
+);
+$cssfiles = array_merge(
+  glob("*.css"),
+  glob("inprogress/*.css")
+);
+
+
+foreach ($jsfiles as $file) {
+  echo "FILE: $file\n";
+  $fh = fopen($file, 'r');
+  $comments = "";
+  while ($line = fgets($fh)) {
+    if (preg_match("/^(async )?function (.*?) ?\(/", $line, $match)
+    ||preg_match("/^(var) (.*?) ?=.*function/", $line, $match)) {
+      $comments = " $match[2]:\n$comments";
+      echo $comments;
+      $comments = "";
+    } else if (preg_match("/^\/\/ - (.*)$/", $line, $match)) {
+      // print_r($match);
+      // var_dump($comments);
+      $comments .= "    - $match[1]\n";
+    }
+  }
+  fclose($fh);
+}
+
+?>
+</pre>
+
+</body>
+
+</html>

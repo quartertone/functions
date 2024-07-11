@@ -1,4 +1,4 @@
-// INPUT entry simulator
+// - INPUT text entry simulator
 function inputit(element, newtext, { clobber = false, interval = 100 } = {}) {
   return new Promise((resolve, reject) => {
     function doinput(element, newval, clobber) {
@@ -21,7 +21,7 @@ function inputit(element, newtext, { clobber = false, interval = 100 } = {}) {
         setTimeout(() => {
           element.value += fc; // input characters one at a time
           doinput(element, text, false); // continue with remainder of text
-        }, interval); // typing speed relative to help speed
+        }, interval);
       }
     }
     doinput(element, newtext, clobber);

@@ -1,4 +1,4 @@
-// one-shot function
+// - one-shot function (resettable
 function oneshot() {
   if (!oneshot.done) {
     oneshot.done = true;
@@ -21,6 +21,7 @@ function oneshot() {
 
 
 // this version of oneshot has an inaccessible "done" variable, so it is truly oneshot
+// - true one-shot (cannot be reset)
 var oneshot2 = (function () {
   let done = false; // this value stays with the function object
   return function () { // this is the function that is assigned to oneshot

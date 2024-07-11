@@ -1,5 +1,4 @@
-
-
+// - convert string date into Date object
 function numtodate(date) {
   // date may be a Date object or yyyymmdd/yyyy-mm-dd string
   if (!date || date instanceof Date) date = isodate(date);
@@ -9,16 +8,17 @@ function numtodate(date) {
 
   // if (date.toString().match(/^\d+$/)) return new Date(date);
   // this is dumb and useless
-
 }
 
-
+// - return yyyy-mm-dd format of date object
 function isodate(date) {
   date ??= new Date();
   // date is Date object
   return date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, "0") + "-" + date.getDate().toString().padStart(2, "0");
 }
 
+
+// - take Date object (or yyyy-mm-dd) and return new Date object after doing date math
 function datecalc(date, { years, months, days } = {}) {
   if (date instanceof Date) date = isodate(date);
   // first deconstruct the date string
@@ -40,13 +40,14 @@ function datecalc(date, { years, months, days } = {}) {
   // return isodate(newdate);
 }
 
-
+// - return local time
 function timenow() {
   var d = new Date();
   return { h: d.getHours().toString().padStart(2,"0"), m: d.getMinutes().toString().padStart(2,"0") };
 }
 
-
+// - return time difference to the closest hour
+// - TODO: make this more generalizable (granularity options)
 function timediff(a, b) {
   return Math.round((a - b) / (1000 * 60 * 60)); // closest hour
   // return Math.round(dtto.valueAsNumber - dtfrom.valueAsNumber)/(1000 * 60 * 60); // closest hour
@@ -55,7 +56,7 @@ function timediff(a, b) {
 
 
 //https://bobbyhadz.com/blog/javascript-convert-milliseconds-to-hours-minutes-seconds
-
+// - convert milliseconds to time (H:m:s)
 function mstotime(milliseconds) {
   let seconds = Math.floor(milliseconds / 1000);
   let minutes = Math.floor(seconds / 60);
@@ -71,7 +72,7 @@ function mstotime(milliseconds) {
 
 
 
-
+// - get shortname of weekday in specified locale (or default)
 function getwkday(n, locale="default") {
   let tempday = new Date();
   let currentDay = tempday.getDay();
