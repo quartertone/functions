@@ -1,9 +1,11 @@
+/*
+if title is given, only one month is shown
+this is to prevent wierdness with buttons
+*/
+
+function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", locale = "default", clickfn, title=""} = {}) {
 
 
-var locale = "en";
-
-
-function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "" } = {}) {
   anchor.innerHTML = "";
   anchor.classList.add("calholder");
 
@@ -35,6 +37,16 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "" } = 
     let navigator = document.createElement("div");
     navigator.id = "calnavigator";
 
+    let navtitle = document.createElement("div");
+    navtitle.innerText = title;
+    navtitle.id = "navtitle";
+
+    
+    let navrow = document.createElement("div");
+    navrow.innerText = title;
+    navrow.id = "navrow";
+
+    
 
     let wayback = document.createElement("button");
     wayback.innerText = "<<";
@@ -58,9 +70,14 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "" } = 
 
     navigator.append(wayback, navback, navcal, navfwd, wayfwd);
     monthrow.innerHTML = "";
-    monthrow.append(navigator);
+    // monthrow.append(navigator); // do this AFTER monthblock
 
-
+    navigator.onmousedown =
+    navigator.ontouchstart =
+    navigator.ontouchmove =
+    function (e) {
+      if (e.type != "touchstart") e.preventDefault();
+    };
     navigator.onclick = function (e) {
       switch (e.target.id) {
         case "wayback":
@@ -70,6 +87,10 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "" } = 
           putmonths({ refdate: new Date(refdate.getFullYear(), refdate.getMonth() - 1) });
           break;
         case "navcal":
+          gridmonth({ refdate: refdate });
+          break;
+
+        case "navcalx":
           promiseprompt("Enter target date", { defaulttext: isodate(refdate), placeholder: "Use format YYYY-mm-dd" }).then(resp => {
             if (resp && numtodate(resp)) {
               putmonths({ refdate: resp });
@@ -102,15 +123,21 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "" } = 
 
       let monthblock = document.createElement("div");
       monthblock.className = "monthblock";
-      monthblock.dataset.month = m.toLocaleString('default', { month: 'long' }) + " (" + m.getFullYear() + ")";
+      monthblock.dataset.month = m.toLocaleDateString(locale, { month: 'long' }) + " (" + m.getFullYear() + ")";
       monthrow.append(monthblock);
 
-      for (let daylabel of "Sunday Monday Tuesday Wednesday Thursday Friday Saturday".split(" ")) {
+      // for (let daylabel of "Sunday Monday Tuesday Wednesday Thursday Friday Saturday".split(" ")) {
+      for (let d = 0; d <= 6; d++) {
         let dayhead = document.createElement("div");
         dayhead.className = "dayhead";
-        dayhead.innerText = daylabel.substring(0, 3);
+        dayhead.innerText = getwkday(d, locale);
+        //   dayhead.innerText = daylabel.substring(0, 3);
         monthblock.append(dayhead);
       }
+
+
+
+
 
       for (let d = blockstart; d <= blockend; d.setDate(d.getDate() + 1)) {
         let dayclass = "day";
@@ -126,15 +153,27 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "" } = 
         monthblock.append(mday);
       }
 
+      monthrow.append(navigator); // do this AFTER monthblock so it renders on top of calendar heading
+
+
+      monthblock.onmousedown =
+      monthblock.ontouchstart =
+      monthblock.ontouchmove =
+      function (e) {
+        if (e.type != "touchstart") e.preventDefault();
+      };
+
       monthblock.onclick = function (e) {
         if (e.target.classList.contains("day")) {
           if (e.target.classList.contains("calfade")) {
             // toasty("faded");
             // date from other month
-            console.log("faded");
             putmonths({ refdate: e.target.dataset.date });
 
           } else {
+            if (clickfn instanceof Function) {
+              clickfn(e);
+            }
             console.log("clicked day", e.target.dataset.date);
 
 
@@ -144,34 +183,54 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "" } = 
       };
 
     }
+
+
   }
 
 
-  function gridmonth(initdate = null, parentcal = null) {
+  function gridmonth({ refdate } = {}) {
+    refdate = numtodate(refdate);
 
     var monthbox = document.createElement("div");
     monthbox.className = "floatingcalbox";
-    parentcal.appendChild(monthbox);
 
-    // monthbox.style.transition = "opacity var(--fadespeed) ease";
-    // monthbox.style.opacity = "0";
+    monthbox.style.transition = "opacity 0.5s ease";
+    monthbox.style.opacity = "0";
 
+
+    let monthdim = makedimbg({ source: monthbox, parentbox: anchor }); // SET BG LISTENER
+
+    makemonthgrid();
+
+    anchor.appendChild(monthbox);
     //Create dimmer BG
-    // makedimbg({ source: monthbox, parentbox: parentcal }); // SET BG LISTENER
-
-    makemonthgrid(initdate);
 
 
-    function makemonthgrid(caldate = null) {
+    monthbox.onmousedown =
+    monthbox.ontouchstart =
+    monthbox.ontouchmove =
+    function (e) {
+      if (e.type != "touchstart") e.preventDefault();
+    };
+    monthbox.onclick = function (e) {
+      if (e.target.classList.contains("gridmonth")) {
+
+        putmonths({ refdate: numtodate(e.target.id) });
+        monthdim.click();
+      }
+    };
+
+
+    function makemonthgrid() {
       //caldate sanity check
-      caldate = numtodate(caldate);
-      let thismonth = caldate.toLocateDateString(locale, { month: "short" });
+      let thismonth = refdate.toLocaleDateString(locale, { month: "short" });
 
       var outText = '<div class="floatingmonth">';
       for (let month = 0; month < 12; month++) {
         var active = "";
-        let thisboxdate = moment(caldate).month(month);
-        let thisboxmonth = thisboxdate.toLocateDateString(locale, { month: "short" }); //.format("MMM");
+        let thisboxdate = new Date(refdate);
+        thisboxdate.setMonth(month);
+        let thisboxmonth = thisboxdate.toLocaleDateString(locale, { month: "short" }); //.format("MMM");
         // let thismm = thisboxdate.format("MM");
         // let thisboxyear = thisboxdate.format("Y");
         // let thisboxday = thisboxdate.format("DD");
@@ -192,6 +251,8 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "" } = 
         monthbox.style.opacity = "1"; // slight delay so animation works
       }, 5);
     }
+
+
   }
 
 

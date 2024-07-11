@@ -21,14 +21,14 @@
 }
 
 .calholder {
+  /* position: relative; */
+  /* width: 100%; */
   --blocksize: 3em;
-  position: relative;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
   margin-top: 2em;
-  width: 100%;
 }
 
 #calnavigator {
@@ -39,7 +39,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  z-index:10;
+  /* z-index:10; */
   button,
   #navcal {
     display: inline-block;

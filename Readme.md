@@ -46,8 +46,6 @@
   - place translucent screen over everything. responds to click events. (useful for pulling attention to floating window)
 - makediv.js
   - convenience function to create DIV element
-- minmax.js
-  - get random integer between min/max, inclusive
 - numtodate_isodate.js
   - numtodate - convert string date into Date object
   - isodate - return yyyy-mm-dd format of date object
@@ -56,6 +54,7 @@
   - timediff - return time difference to the closest hour
     - TODO: make this more generalizable (granularity options)
   - mstotime - convert milliseconds to time (H:m:s)
+  - getwkday - get shortname of weekday in specified locale (or default)
 - oneshot.js
   - one-shot function
   - one version can be "reset"
@@ -67,10 +66,13 @@
   - stylesheet for promiseprompt
 - promisetimeout.js
   - a "sleep" function for use inside async functions
+- randoms.js
+  - random - seeded random number generator (simple version)
+  - minmax - get random integer between min/max, inclusive
+  - minmaxexcept - random integer except some number
+  - randarray - random array element; optional exclusion parameter
 - scrollto.js
   - scroll an element into view
-- seededrandom.js
-  - seeded random number generator (simple version)
 - spark.js
   - flash a marker on an element
 - spark.css

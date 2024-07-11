@@ -1,31 +1,31 @@
 
 
-function makedimbg({ onoff = true, source, parentbox, onclickfn, fadetime = "0.5s"} = {}) {
+function makedimbg({ onoff = true, source, parentbox, onclickfn, fadetime = "0.5s" } = {}) {
   let dimbox;
 
-  if (onoff) { // always set dimmer if this is true
+  // if (onoff) { // always set dimmer if this is true
 
-    dimbox = document.createElement("div");
-    dimbox.id = "dimbox";
-    dimbox.style = "z-index:100;position:fixed;inset:0;background:#4447;opacity:0;";
-    dimbox.style.transition = `opacity ${fadetime} ease`;
+  dimbox = document.createElement("div");
+  // dimbox.id = "dimbox";
+  dimbox.style = "position:fixed;inset:0;background:#4447;opacity:0;";
+  dimbox.style.transition = `opacity ${fadetime} ease`;
 
-    if (parentbox != null) {
-      // if parentbox is given, append to that instead of body
-      parentbox.appendChild(dimbox);
-    } else {
-      document.body.appendChild(dimbox);
-    }
-
-    setTimeout(function () {
-      // fade in
-      dimbox.style.opacity = "1";
-    }, 5);
-  } else if (!onoff) {
-    // remove the dimmer
-    dimbox = document.getElementById("dimbox");
-    dimbox.remove();
+  if (parentbox != null) {
+    // if parentbox is given, append to that instead of body
+    parentbox.appendChild(dimbox);
+  } else {
+    document.body.appendChild(dimbox);
   }
+
+  setTimeout(function () {
+    // fade in
+    dimbox.style.opacity = "1";
+  }, 5);
+  // } else if (!onoff) {
+  //   // remove the dimmer
+  //   dimbox = document.getElementById("dimbox");
+  //   dimbox.remove();
+  // }
 
   if (onclickfn) {
     // if onclick function is set, use it instead.

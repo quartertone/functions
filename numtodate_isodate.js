@@ -69,3 +69,13 @@ function mstotime(milliseconds) {
   return `${pad2start(hours)}:${pad2start(minutes)}:${pad2start(seconds)}.${millis}`;
 }
 
+
+
+
+function getwkday(n, locale="default") {
+  let tempday = new Date();
+  let currentDay = tempday.getDay();
+  let distance = n - currentDay;
+  tempday.setDate(tempday.getDate() + distance);
+  return tempday.toLocaleDateString(locale, { weekday: "short" });
+}
