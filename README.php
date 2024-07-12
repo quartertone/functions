@@ -9,11 +9,12 @@
 
 <body>
   <pre>
+# Collection of useful Javascript functions
 <?php
 
 $jsfiles = array_merge(
   glob("*.js"),
-  // glob("inprogress/*.js")
+  glob("inprogress/*.js")
 );
 $cssfiles = array_merge(
   glob("*.css"),
@@ -22,13 +23,17 @@ $cssfiles = array_merge(
 
 
 foreach ($jsfiles as $file) {
-  echo "FILE: $file\n";
+  echo "$file\n";
   $fh = fopen($file, 'r');
   $comments = "";
   while ($line = fgets($fh)) {
-    if (preg_match("/^(async )?function (.*?) ?\(/", $line, $match)
-    ||preg_match("/^(var) (.*?) ?=.*function/", $line, $match)) {
-      $comments = " $match[2]:\n$comments";
+    if (
+      preg_match("/^(async )?function (.*?) ?\(/", $line, $match)
+      || preg_match("/^(var) (.*?) ?=.*function/", $line, $match)
+      || preg_match("/^(customElements.define\(\")(.*?)\"/", $line, $match)
+
+    ) {
+      $comments = "  - $match[2]:\n$comments";
       echo $comments;
       $comments = "";
     } else if (preg_match("/^\/\/ - (.*)$/", $line, $match)) {

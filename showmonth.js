@@ -2,7 +2,9 @@
 if title is given, only one month is shown
 this is to prevent wierdness with buttons
 */
-
+// - display interactive calendar
+// - option for showing multiple months
+// - styles set in showmonth.css
 function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", locale = "default", clickfn, title = "" } = {}) {
 
 
