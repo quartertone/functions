@@ -64,10 +64,10 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", loc
 
     navigator.append(wayback, navback, navcal, navfwd, wayfwd);
 
-    
+
     let monthrow = document.createElement("div");
     monthrow.className = "monthrow " + classes;
-    
+
     anchor.innerHTML = "";
     anchor.append(navigator, monthrow);
 
@@ -93,7 +93,7 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", loc
             if (resp && numtodate(resp)) {
               putmonths({ refdate: resp });
             }
-          }).catch(e=> {console.log(e)});
+          }).catch(e => { console.log(e); });
           break;
         case "navfwd":
           putmonths({ refdate: new Date(refdate.getFullYear(), refdate.getMonth() + 1) });
@@ -128,10 +128,10 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", loc
 
       monthheading.onclick = () => {
         gridmonth({ refdate: refdate });
-      }
-      
+      };
+
       monthblock.append(monthheading);
-      
+
       monthrow.append(monthblock);
 
       // for (let daylabel of "Sunday Monday Tuesday Wednesday Thursday Friday Saturday".split(" ")) {
@@ -172,18 +172,13 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", loc
       monthblock.onclick = function (e) {
         if (e.target.classList.contains("day")) {
           if (e.target.classList.contains("calfade")) {
-            // toasty("faded");
-            // date from other month
+            // go to other month
             putmonths({ refdate: e.target.dataset.date });
-
           } else {
             if (clickfn instanceof Function) {
               clickfn(e);
             }
             console.log("clicked day", e.target.dataset.date);
-
-
-
           }
         };
       };

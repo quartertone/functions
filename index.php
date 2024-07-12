@@ -36,28 +36,26 @@
 <body>
 
   <br />
-  <grid-cal value="2024-05-11" data-locale="en" title="CALENDRA" precheck="testcal"></grid-cal>
+  <grid-cal  data-locale="en" title="CALENDRA" precheck="testcal" reset="true"></grid-cal>
   <br />
 
-  <input type="checkbox" class="slider" id="ck" />CHECK<br />
+  <!-- <input type="checkbox" class="slider" id="ck" />CHECK<br /> -->
 
   <div id="out"></div>
   <div id="two"></div>
 
+  <!-- <clock-face></clock-face> -->
 
   <script>
     let gc = document.querySelector("grid-cal");
     let ck = document.querySelector("#ck");
 
     function testcal(e) {
-      console.log("boohay");
-      return ck.checked;
+      // return ck.checked;
+      return true;
     }
-    
-    showmonth({
-      anchor: document.querySelector("#out"),
-      precal: 0
-    })
+
+
 
 
     showmonth({

@@ -39,11 +39,20 @@ customElements.define("grid-cal", class GridCalendar extends HTMLElement {
 
     let locale = this.dataset.locale ?? "default";
 
-    basethis.initialvalue = this.getAttribute("value");
+    basethis.initialvalue = this.getAttribute("value") ?? isodate();
 
     // precheck function will run on interaction (click or drag)
     // return value must be true to continue
     basethis.precheck = this.getAttribute("precheck");
+
+    // if true, selecting REFDATE will reset the calendar
+    // is this useful?? but then today cannot be selected...
+    // TODO - improve this so that today can be selected at first
+    basethis.reset = this.getAttribute("reset");
+
+
+    basethis.clickfn = this.getAttribute("clickfn");
+
 
     function sendinput(value) {
       let newevent = new Event("input");
@@ -116,7 +125,10 @@ customElements.define("grid-cal", class GridCalendar extends HTMLElement {
 
       document.body.appendChild(calendarbox);
 
-      showmonth({ refdate: basethis.value ?? basethis.initialvalue, anchor: calendarbox, classes: "floatingcal", locale: locale, clickfn: clickedfn });
+      // get clickfn name from attributes
+      let clickfn = basethis.clickfn ? window[basethis.clickfn] : clickedfn;
+
+      showmonth({ refdate: basethis.value ?? basethis.initialvalue, anchor: calendarbox, classes: "floatingcal", locale: locale, clickfn: clickfn });
 
 
       setTimeout(function () {
@@ -127,12 +139,15 @@ customElements.define("grid-cal", class GridCalendar extends HTMLElement {
 
       function clickedfn(e) {
         if (e.target.dataset.date && e.target.classList.contains("day")) {
-          // turn off dimmer, and close calendarbox
-          // makedimbg({ onoff: false });
+          // turn off dimmer == also closes calendarbox
           caldim.click();
-          // calendarbox.remove();
-          //if (debugmode()) console.log("Fulfilling promise");
-          basethis.value = e.target.dataset.date;
+          if (basethis.reset && e.target.dataset.date == basethis.value) {
+            // reset if "reset" attribute is set,
+            // and if the selected date is selected again
+            basethis.value = "";
+          } else {
+            basethis.value = e.target.dataset.date;
+          }
           sendinput(basethis.value);
         }
       }
