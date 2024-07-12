@@ -23,7 +23,7 @@ $cssfiles = array_merge(
 
 
 foreach ($jsfiles as $file) {
-  echo "$file\n";
+  echo "\n$file\n";
   $fh = fopen($file, 'r');
   $comments = "";
   while ($line = fgets($fh)) {
