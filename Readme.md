@@ -41,7 +41,7 @@ gridcal_new.js
   - grid-cal:
     - custom element date picker (uses showmonth.js)
     - Resulting date is formatted Y-MM-DD (eg - 2019-05-28)
-    - &lt;grid-cal title="Calendar Title"&gt;&lt;/grid-cal&gt;
+    - <grid-cal title="Calendar Title"></grid-cal>
     - element.value holds results
     - element.oninput to respond to changes
     - innerHTML is set to title attribute

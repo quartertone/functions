@@ -8,7 +8,7 @@ function makedimbg({ onoff = true, source, parentbox, onclickfn, fadetime = "0.5
 
   dimbox = document.createElement("div");
   // dimbox.id = "dimbox";
-  dimbox.style = "position:fixed;inset:0;background:#4447;opacity:0;";
+  dimbox.style = "position:fixed;inset:0;background:#444b;opacity:0;";
   dimbox.style.transition = `opacity ${fadetime} ease`;
 
   if (parentbox != null) {
@@ -33,17 +33,29 @@ function makedimbg({ onoff = true, source, parentbox, onclickfn, fadetime = "0.5
     e.preventDefault();
     dimbox.remove();
     if (source) source.remove();
+    window.removeEventListener("wheel", dontscroll);
   };
 
   dimbox.onclick = dimbox.ontouch = function (e) {
     onclickfn(e);
   };
 
+  window.addEventListener("wheel", dontscroll, {passive:false});
+
+  function dontscroll(e) {
+    e.preventDefault();
+  }
+
+
+
   function doescape(e) {
     if (e.key == "Escape") {
       window.removeEventListener("keydown", doescape);
       e.preventDefault();
       onclickfn(e);
+    } else if (e.code.match(/^(Arrow|Page|Space)/)) {
+      console.log(e.code, "No scrolling while dimbg");
+      e.preventDefault();
     }
   }
 

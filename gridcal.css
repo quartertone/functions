@@ -1,3 +1,7 @@
+grid-cal {
+  cursor:pointer;
+}
+
 .floatingcalbox {
   background: var(--cal-bg);
   position: fixed!important;
