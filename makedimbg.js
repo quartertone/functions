@@ -1,4 +1,6 @@
-// - place translucent screen over everything. responds to click events. (useful for pulling attention to floating window)
+// - place translucent screen over everything.
+// - click or press Escape to dismiss
+// - useful for pulling attention to floating window
 function makedimbg({ onoff = true, source, parentbox, onclickfn, fadetime = "0.5s" } = {}) {
   let dimbox;
 
@@ -10,34 +12,42 @@ function makedimbg({ onoff = true, source, parentbox, onclickfn, fadetime = "0.5
   dimbox.style.transition = `opacity ${fadetime} ease`;
 
   if (parentbox != null) {
-    // if parentbox is given, append to that instead of body
     parentbox.appendChild(dimbox);
   } else {
     document.body.appendChild(dimbox);
   }
 
   setTimeout(function () {
-    // fade in
     dimbox.style.opacity = "1";
   }, 5);
+
   // } else if (!onoff) {
   //   // remove the dimmer
   //   dimbox = document.getElementById("dimbox");
   //   dimbox.remove();
   // }
 
-  if (onclickfn) {
-    // if onclick function is set, use it instead.
-    // NOTE: custom function must also manage the dimbox (eg let dimbg = makedimbg({onclickfn:functionname}); ----> functionname() {dimbg.remove()};
-    dimbox.onclick = dimbox.ontouch = function (e) {
-      onclickfn(e);
-    };
-  } else {
-    dimbox.onclick = dimbox.ontouch = function (e) {
+  // if onclick function is set, use it instead.
+  // NOTE: custom function must also manage the dimbox (eg let dimbg = makedimbg({onclickfn:functionname}); ----> functionname() {dimbg.remove()};
+  onclickfn ??= function (e) {
+    e.preventDefault();
+    dimbox.remove();
+    if (source) source.remove();
+  };
+
+  dimbox.onclick = dimbox.ontouch = function (e) {
+    onclickfn(e);
+  };
+
+  function doescape(e) {
+    if (e.key == "Escape") {
+      window.removeEventListener("keydown", doescape);
       e.preventDefault();
-      dimbox.remove();
-      if (source) source.remove();
-    };
+      onclickfn(e);
+    }
   }
+
+  window.addEventListener("keydown", doescape);
+
   return dimbox;
 }

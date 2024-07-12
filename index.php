@@ -26,28 +26,35 @@ echo "<link rel='stylesheet' href='$cssfile' />\n";
 }
 
 ?>
-
+<style>
+  body {
+    /* background: #222; */
+    /* color: #fff; */
+  }
+</style>
 </head>
 
 <body>
+<div is="grid-cal"></div>
 
-  <grid-cal value="2024-05-11" data-noshow="true" data-locale="en" title="CALENDRA"></grid-cal>
+  <grid-cal value="2024-05-11" data-locale="en" title="CALENDRA"></grid-cal>
+  <br/>
+
+  <grid-cal value="2024-05-11" data-locale="he" title="title thing"></grid-cal>
+
+
 
   <div id="out"></div>
-
-
-  <shadow-cal value="2024-05-11" data-noshow="true" data-locale="en" title="CALENDRA"></shadow-cal>
+<div id="two"></div>
 
 
   <script>
-    let out = document.querySelector("#out");
-    showmonth({ anchor: out, precal: 0 , clickfn:myclickfn})
-    // .then(r => {console.log("promise",r)});
+    showmonth({ anchor: document.querySelector("#out"), precal: 0})
 
 
-    function myclickfn(e) {
-      // console.log("e", e);
-    }
+    showmonth({ locale:"es", anchor: document.querySelector("#two"), precal: 1})
+
+
   </script>
 </body>
 

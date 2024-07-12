@@ -3,16 +3,11 @@ if title is given, only one month is shown
 this is to prevent wierdness with buttons
 */
 
-function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", locale = "default", clickfn, title=""} = {}) {
+function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", locale = "default", clickfn, title = "" } = {}) {
 
 
-  anchor.innerHTML = "";
+  // anchor.innerHTML = "";
   anchor.classList.add("calholder");
-
-  let monthrow = document.createElement("div");
-  monthrow.className = "monthrow " + classes;
-
-  anchor.append(monthrow);
 
 
   putmonths({ refdate: refdate });
@@ -41,43 +36,48 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", loc
     navtitle.innerText = title;
     navtitle.id = "navtitle";
 
-    
     let navrow = document.createElement("div");
     navrow.innerText = title;
     navrow.id = "navrow";
 
-    
-
-    let wayback = document.createElement("button");
-    wayback.innerText = "<<";
+    let wayback = document.createElement("div");
+    wayback.dataset.mark = "<<";
     wayback.id = "wayback";
 
-    let navback = document.createElement("button");
-    navback.innerText = "<";
+    let navback = document.createElement("div");
+    navback.dataset.mark = "<";
     navback.id = "navback";
 
     let navcal = document.createElement("div");
     navcal.id = "navcal";
+    // navcal.dataset.mark = refdate.getFullYear();
 
-    let navfwd = document.createElement("button");
-    navfwd.innerText = ">";
+    let navfwd = document.createElement("div");
+    navfwd.dataset.mark = ">";
     navfwd.id = "navfwd";
 
-    let wayfwd = document.createElement("button");
-    wayfwd.innerText = ">>";
+    let wayfwd = document.createElement("div");
+    wayfwd.dataset.mark = ">>";
     wayfwd.id = "wayfwd";
 
-
     navigator.append(wayback, navback, navcal, navfwd, wayfwd);
-    monthrow.innerHTML = "";
-    // monthrow.append(navigator); // do this AFTER monthblock
+
+    
+    let monthrow = document.createElement("div");
+    monthrow.className = "monthrow " + classes;
+    
+    anchor.innerHTML = "";
+    anchor.append(navigator, monthrow);
+
+    // monthrow.append(navigator);
+
 
     navigator.onmousedown =
-    navigator.ontouchstart =
-    navigator.ontouchmove =
-    function (e) {
-      if (e.type != "touchstart") e.preventDefault();
-    };
+      navigator.ontouchstart =
+      navigator.ontouchmove =
+      function (e) {
+        if (e.type != "touchstart") e.preventDefault();
+      };
     navigator.onclick = function (e) {
       switch (e.target.id) {
         case "wayback":
@@ -87,15 +87,11 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", loc
           putmonths({ refdate: new Date(refdate.getFullYear(), refdate.getMonth() - 1) });
           break;
         case "navcal":
-          gridmonth({ refdate: refdate });
-          break;
-
-        case "navcalx":
           promiseprompt("Enter target date", { defaulttext: isodate(refdate), placeholder: "Use format YYYY-mm-dd" }).then(resp => {
             if (resp && numtodate(resp)) {
               putmonths({ refdate: resp });
             }
-          });
+          }).catch(e=> {console.log(e)});
           break;
         case "navfwd":
           putmonths({ refdate: new Date(refdate.getFullYear(), refdate.getMonth() + 1) });
@@ -123,7 +119,17 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", loc
 
       let monthblock = document.createElement("div");
       monthblock.className = "monthblock";
-      monthblock.dataset.month = m.toLocaleDateString(locale, { month: 'long' }) + " (" + m.getFullYear() + ")";
+
+      let monthheading = document.createElement("div");
+      monthheading.className = "monthheading";
+      monthheading.innerText = m.toLocaleDateString(locale, { month: 'long' }) + " (" + m.getFullYear() + ")";
+
+      monthheading.onclick = () => {
+        gridmonth({ refdate: refdate });
+      }
+      
+      monthblock.append(monthheading);
+      
       monthrow.append(monthblock);
 
       // for (let daylabel of "Sunday Monday Tuesday Wednesday Thursday Friday Saturday".split(" ")) {
@@ -153,15 +159,13 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", loc
         monthblock.append(mday);
       }
 
-      monthrow.append(navigator); // do this AFTER monthblock so it renders on top of calendar heading
-
 
       monthblock.onmousedown =
-      monthblock.ontouchstart =
-      monthblock.ontouchmove =
-      function (e) {
-        if (e.type != "touchstart") e.preventDefault();
-      };
+        monthblock.ontouchstart =
+        monthblock.ontouchmove =
+        function (e) {
+          if (e.type != "touchstart") e.preventDefault();
+        };
 
       monthblock.onclick = function (e) {
         if (e.target.classList.contains("day")) {
@@ -207,11 +211,11 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", loc
 
 
     monthbox.onmousedown =
-    monthbox.ontouchstart =
-    monthbox.ontouchmove =
-    function (e) {
-      if (e.type != "touchstart") e.preventDefault();
-    };
+      monthbox.ontouchstart =
+      monthbox.ontouchmove =
+      function (e) {
+        if (e.type != "touchstart") e.preventDefault();
+      };
     monthbox.onclick = function (e) {
       if (e.target.classList.contains("gridmonth")) {
 

@@ -1,41 +1,91 @@
 :root {
-  --bodybg: #333;
-  --bodyfg: var(--bs-body-color);
-  --linkcolor: var(--bs-link-color);
+  /* --bodybg: #333; */
+  /* --bodyfg: var(--bs-body-color); */
+  /* --linkcolor: var(--bs-link-color); */
 
-  --today: #f91;
+  --cal-today: #d70;
 
-  --calhover: #3cf9;
-  --calnoshifthover: #234;
-  --calselected: #cf37;
+  --cal-hover: #3cf9;
+  --cal-noshifthover: #234;
+  --cal-selected: #cf3;
 
-  --tableborder: #88a;
+  --cal-tableborder: #88a;
+
+  --cal-basecolor: 240;
+  --cal-darkness: 1;
+  --cal-saturation: 1;
+
+  --cal-bg: #222;
+  --cal-fg: #fff;
+  --cal-border: hsl(
+    var(--cal-basecolor),
+    calc(var(--cal-saturation) * 20%),
+    calc(var(--cal-darkness) * 78%)
+  );
+  --cal-btnbg: hsl(
+    var(--cal-basecolor),
+    calc(var(--cal-saturation) * 100%),
+    calc(var(--cal-darkness) * 87%)
+  );
+  --cal-btnfg: hsl(
+    var(--cal-basecolor),
+    calc(var(--cal-saturation) * 11%),
+    calc(var(--cal-darkness) * 29.8%)
+  );
+  --cal-btnhover: hsl(
+    var(--cal-basecolor),
+    calc(var(--cal-saturation) * 100%),
+    calc(var(--cal-darkness) * 83.5%)
+  );
+  --cal-btnactive: hsl(
+    calc(var(--cal-basecolor) - 190),
+    calc(var(--cal-saturation) * 100%),
+    calc(var(--cal-darkness) * 65%)
+  );
 }
 
 .calholder {
-  /* position: relative; */
+  position: relative;
   /* width: 100%; */
   --blocksize: 3em;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  user-select: none;
   margin-top: 2em;
-
-  .calfade,
-  .calfade::before {
-    opacity: 0.25;
+  color:var(--cal-fg);
+  &:not(:has(.monthblock ~ .monthblock)) {
+    display: table;
+    left: 50%;
+    transform: translate(-50%);
   }
 
-  .monthrow {
+  /* &:has(.monthblock ~ .monthblock) {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+  } */
+
+  background-color: var(--cal-bg);
+  border: 0.01em solid var(--cal-tableborder);
+
+  .calfade,
+  .calfade::before {
+    opacity: 0.4;
+  }
+
+  .monthrow {
+    /* left: 0; */
+    display: block;
     position: relative;
+
+    &:has(.monthblock ~ .monthblock) {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
     /*grid-template-columns: 1fr 1fr 1fr;*/
     /* transition: all 0.5s; */
-    left: 0;
 
     .monthblock {
       position: relative;
@@ -45,9 +95,18 @@
       user-select: none;
       align-content: start;
 
-      &:has(~ .month) {
+      /* &:has(~ .monthblock) {
         margin-right: 1em;
+      } */
+
+      .monthheading {
+        cursor:pointer;
+        grid-column: 1 / span 7;
+        text-align: center;
+        font-size: 1.25em;
+        margin-bottom: 0.5em;
       }
+
 
       .dayhead {
         text-align: center;
@@ -56,33 +115,39 @@
 
       .day {
         position: relative;
-        display: inline-block;
+        display: block;
         width: var(--blocksize);
         height: var(--blocksize);
         text-align: center;
         line-height: var(--blocksize);
-        border: solid 0.5px var(--tableborder);
+        border: solid 0.001em var(--cal-tableborder);
         cursor: pointer;
+
+        background: var(--cal-btnbg);
+        /* border: 0.001em solid var(--cal-bg); */
+        color: var(--cal-btnfg);
 
         &::before {
           content: attr(data-day);
+          font-size:150%;
         }
 
         &:hover {
-          background-color: var(--calhover);
+          background-color: var(--cal-hover);
           opacity: 1;
         }
 
-        &:not([data-blockid]):hover {
+        /* &:not([data-blockid]):hover {
           background-color: var(--calnoshifthover);
-        }
+        } */
 
         &.selecteddate {
-          background-color: var(--calselected);
+          background-color: var(--cal-selected);
         }
 
         &.today {
-          color: var(--today);
+          color: var(--cal-today);
+          font-weight:bold;
         }
 
         .slotplus,
@@ -91,32 +156,48 @@
         }
       }
 
-      &::before {
-        content: attr(data-month);
-        grid-column: 1 / span 7;
-        text-align: center;
-        font-size: 1.25em;
-        margin-bottom: 0.5em;
-      }
     }
   }
 
   #calnavigator {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    position: relative;
+    /* top: 0; */
+    /* left: 0; */
+    /* width: 100%; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    /* z-index:10; */
-    button,
-    #navcal {
-      display: inline-block;
+    margin: calc(var(--blocksize) / 10);
+
+    & > div {
+      width: calc(var(--blocksize) - 10px);
+      height: calc(var(--blocksize) - 10px);
+      /* display: inline-block; */
+      /* width: var(--blocksize);      height: var(--blocksize); */
+
+      text-align: center;
+      padding: 0;
       cursor: pointer;
+      line-height: var(--blocksize);
+
+      background: var(--cal-btnbg);
+      border: 0.001em solid var(--cal-bg);
+      color: var(--cal-btnfg);
+
+      &:hover {
+        background-color: var(--cal-btnhover);
+      }
+
+      &::before {
+        content: attr(data-mark);
+        font-size:150%;
+      }
+
     }
+
     #navcal {
       flex-grow: 0.85;
+      width: calc(var(--blocksize) * 3);
     }
   }
 }
