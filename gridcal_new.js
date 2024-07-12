@@ -2,10 +2,10 @@
 // - custom element date picker (uses showmonth.js)
 // - Resulting date is formatted Y-MM-DD (eg - 2019-05-28)
 // - &lt;grid-cal title="Calendar Title"&gt;&lt;/grid-cal&gt;
-// - divname.value holds results
-// - divname.oninput to respond to changes
+// - element.value holds results
+// - element.oninput to respond to changes
 // - innerHTML is set to title attribute
-// - setting divname.value="" will also set innerHTML to title again
+// - setting element.value="" will also set innerHTML to title again
 // - styles set in gridcal.css and showmonth.css
 customElements.define("grid-cal", class GridCalendar extends HTMLElement {
 
