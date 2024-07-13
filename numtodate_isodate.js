@@ -72,11 +72,12 @@ function mstotime(milliseconds) {
 
 
 
-// - get shortname of weekday in specified locale (or default)
-function getwkday(n, locale="default") {
+// - get name of weekday in specified locale (or default)
+function getwkday(n, locale="default",format="short") {
+  // n is weekday number (0-6)
   let tempday = new Date();
   let currentDay = tempday.getDay();
   let distance = n - currentDay;
   tempday.setDate(tempday.getDate() + distance);
-  return tempday.toLocaleDateString(locale, { weekday: "short" });
+  return tempday.toLocaleDateString(locale, { weekday: format });
 }
