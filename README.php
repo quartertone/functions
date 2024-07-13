@@ -29,7 +29,7 @@ foreach ($jsfiles as $file) {
   while ($line = fgets($fh)) {
     if (
       preg_match("/^(async )?function (.*?) ?\(/", $line, $match)
-      || preg_match("/^(var) (.*?) ?=.*function/", $line, $match)
+      || preg_match("/^(var) (\w*?) ?=.*function/", $line, $match)
       || preg_match("/^(customElements.define\(\")(.*?)\"/", $line, $match)
 
     ) {

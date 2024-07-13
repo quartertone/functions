@@ -1,4 +1,4 @@
-// - one-shot function (resettable
+// - one-shot function (resettable)
 function oneshot() {
   if (!oneshot.done) {
     oneshot.done = true;
