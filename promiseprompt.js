@@ -12,10 +12,6 @@ function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext =
 
     let dimbg = makedimbg({
       source: promptbox,
-      // onclickfn: () => {
-      //   closeit();
-      //   resolve(false);
-      // },
       alsofn: () => {
         resolve(false);
         console.log("ALSODING");
@@ -23,8 +19,6 @@ function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext =
 
       }
     });
-
-
 
 
     if (html) {
