@@ -1,27 +1,37 @@
 
 // - interactive dialog that resolves to a promise. Requires makedimbg
 // - necessary styles in promiseprompt.css 
-function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext = "Ok", canceltext = "Cancel", id = "promiseprompt", confirm = false, html = false, okfn = async function () { return true; } } = {}) {
+function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext = "Ok", canceltext = "Cancel", id = "promiseprompt", classes, confirm = false, html = false, okfn = async function () { return true; } } = {}) {
   // Note: deconstructed object can be passed as a regular object
   return new Promise((resolve, reject) => {
-
-    let dimbg = makedimbg({
-      onclickfn: () => {
-        closeit();
-        resolve(false);
-      }
-    });
-
 
     let promptbox = document.createElement("div");
     // promptbox.style = style;
     promptbox.id = id;
+    promptbox.className = "promiseprompt " + classes;
+
+    let dimbg = makedimbg({
+      source: promptbox,
+      // onclickfn: () => {
+      //   closeit();
+      //   resolve(false);
+      // },
+      alsofn: () => {
+        resolve(false);
+        console.log("ALSODING");
+        document.removeEventListener("keydown", keylistener);
+
+      }
+    });
+
+
+
 
     if (html) {
       promptbox.append(promptext);
     } else {
       let textrow = document.createElement("div");
-      textrow.id = "promisetext";
+      textrow.className = "promisetext";
       textrow.innerText = promptext;
       promptbox.append(textrow);
     }
@@ -38,28 +48,28 @@ function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext =
     }
 
     let cxlbtn = document.createElement("button");
-    cxlbtn.id = "promise_cancel";
+    cxlbtn.className = "promise_cancel";
     cxlbtn.innerText = canceltext;
     cxlbtn.onclick = () => {
-      closeit();
-      resolve(false);
+      // resolve(false);
+      dimbg.click(); // alsofn defaults to resolve false
       // TODO :consider switching this to "reject"
     };
     let okbtn = document.createElement("button");
-    okbtn.id = "promise_ok";
+    okbtn.className = "promise_ok";
     okbtn.innerText = oktext;
     okbtn.onclick = () => {
       okfn().then(r => {
         if (r) {
-          closeit();
-          resolve(inbox.value || confirm);
+          resolve(inbox.value || confirm); // resolve first to override alsofn
+          dimbg.click();
           // pbox.submit();
         }
       });
     };
 
     let buttonrow = document.createElement("div");
-    buttonrow.id = "promisebtns";
+    buttonrow.className = "promisebtns";
     buttonrow.append(cxlbtn, okbtn);
 
     promptbox.append(buttonrow);
@@ -69,25 +79,19 @@ function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext =
       inbox.select();
     }
 
-    function closeit() {
-      promptbox.remove();
-      dimbg.remove();
-      document.removeEventListener("keydown", keylistener);
-    }
-
     function keylistener(e) {
       e.stopImmediatePropagation();
       switch (e.key) {
         case "Enter":
           e.preventDefault();
-          closeit();
+          resolve(inbox.value || confirm); // resolve first to override alsofn
+          dimbg.click();
           // resolve(false);
-          resolve(inbox.value || confirm);
           break;
         case "Escape":
           e.preventDefault();
-          closeit();
-          resolve(false);
+          // resolve(false);
+          dimbg.click(); // alsofn defaults to resolve false
           break;
       }
     }
@@ -97,11 +101,21 @@ function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext =
   });
 }
 
-{ // HOW TO USE promiseprompt
-  // promiseprompt("Guess what?", { defaulttext: butn.innerText, placeholder: "Put something here", style: "display:block" }).then((e) => {
-  //   butn.innerText = e;
-  //   console.log(e);
-  // }).catch((e) => {
-  //   console.log("rejected promise prompt");
-  // });
-}
+// HOW TO USE promiseprompt
+// promptext - required. Text displayed in prompt
+// placeholder - placeholder text in prompt input field
+// defaulttext - default value of input field
+// oktext - ok button text
+// canceltext - cancel button text
+// id - css ID; defaults to "promiseprompt"
+// classes - additional classes ("promiseprompt" always)
+// confirm - if TRUE, will ignore input text  parameters (placeholder, defaulttext)
+// html - if TRUE will interpret prompttext as HTML entity
+// okfn - function to run on OK
+
+// promiseprompt("Guess what?", { defaulttext: "cheknbut", placeholder: "Put something here", style: "display:block" }).then((e) => {
+//   butn.innerText = e;
+//   console.log(e);
+// }).catch((e) => {
+//   console.log("rejected promise prompt");
+// });
