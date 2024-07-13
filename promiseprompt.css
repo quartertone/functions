@@ -1,7 +1,11 @@
-#promiseprompt {
+.promiseprompt {
   --menubg: #888;
   --otherbg: #666;
   --inputbg: #aaa;
+  --fg:#000;
+  --p-hover:#392a;
+  --p-selected:#e62a;
+  --btnfg: #fff;
   position: fixed;
   z-index: 1001;
   top: 10em;
@@ -15,34 +19,34 @@
   width: min(20em, 70vw);
   border-radius: 0.5em;
 
-  #promisetext {
+  .promisetext {
     text-align: left;
     margin-bottom: 0.75em;
   }
-  input {
+  & input {
     background: var(--inputbg);
-    color: var(--bodybg);
+    color: var(--fg);
     /* margin: 0.5em 0; */
     padding: 0.1em 0;
     /* width: 100%; */
   }
 
-  #promisebtns {
+  .promisebtns {
     text-align: right;
-    button {
+    & button {
       margin: 0.25em;
       border: none;
       background: transparent;
-      color: var(--bodyfg);
+      color: var(--btnfg);
       font-size: 90%;
       border-radius: 0.2em;
       padding: 0.2em;
 
       &:hover {
-        background-color: var(--calhover);
+        background-color: var(--p-hover);
       }
       &:active {
-        background: var(--calselected);
+        background: var(--p-selected);
       }
     }
   }
