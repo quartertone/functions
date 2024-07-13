@@ -1,5 +1,6 @@
 // https://decode.sh/seeded-random-number-generator-in-js/
 // - seeded pseudo random number generator
+// - let rng = random(123456); rng();
 function random(seed) {
   seed ??= Math.random() * 10**9;
   let m = 2 ** 35 - 31;

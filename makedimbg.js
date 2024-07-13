@@ -3,6 +3,7 @@
 // - useful for pulling attention to floating window
 // - onclickfn replaces click response
 // - alsofn runs in addition to default click response
+// - makedimbg({source, parentbox, onclickfn, fadetime, alsofn })
 function makedimbg({ source, parentbox, onclickfn, fadetime = "0.35s", alsofn } = {}) {
   let dimbox;
 

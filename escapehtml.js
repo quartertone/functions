@@ -1,5 +1,6 @@
 
 // - replace selected HTML chars with HTML entities
+// - escapeHtml(string)
 function escapeHtml(unsafe) {
   return unsafe
     .replace(/&/g, "&amp;")
@@ -11,12 +12,11 @@ function escapeHtml(unsafe) {
 
 // https://stackoverflow.com/a/31638198
 // - replaces HTML chars with charcodes
+// - encode(string)
 function encode(e) {
   // return e.replace(/[^]/g,
-  return e.replace(/[^0-9a-zA-Z'",.;:-_#^(){}]/g,
+  return e.replace(/[^0-9a-zA-Z'",.;:-_#^<>(){}]/g,
     function (e) {
       return "&#" + e.charCodeAt(0) + ";";
     });
 }
-
-//[^0-9a-zA-Z,.;:-_#^(){}]

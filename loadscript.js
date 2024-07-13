@@ -1,4 +1,5 @@
 // - dynamically load JS file
+// - loadscript(url, {options}, vnum) -- TODO deconstruct this 
 function loadScript(url, options, vnum) {
   //options = ={id: null, anchor: null, defer: false, async: false};
   let script = document.createElement("script"); // create a script DOM node

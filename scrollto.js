@@ -1,4 +1,5 @@
 // - scroll an element into view
+// - scrollto(element)
 function scrollto(el) {
   if (typeof el === "string") {
     // console.log("checking", el);

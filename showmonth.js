@@ -5,6 +5,7 @@ this is to prevent wierdness with buttons
 // - display interactive calendar
 // - option for showing multiple months
 // - styles set in showmonth.css
+// - showmonth({ refdate, precal, postcal, anchor, classes, locale, clickfn, title })
 function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", locale = "default", clickfn, title = "" } = {}) {
 
 
@@ -255,11 +256,6 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", loc
 
 
   }
-
-
-
-
-
 
 
   // TODO - return promise somewhere when day is clicked

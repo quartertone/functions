@@ -1,4 +1,5 @@
 // - flash a marker on an element
+// - spark({x,y}, {interval, archor, size, color})
 function spark({x, y}={}, { interval = 1000, anchor = document.body, size = "2em", color = "green" } = {}) {
   return new Promise((resolve) => {
     let spk = document.createElement("div");

@@ -1,4 +1,5 @@
 // - load CSSS file into head as link
+// - loadCSS(url, id)
 function loadCSS(url, id) {
   if (document.getElementById(id) == null) {
     let link = document.createElement("link");

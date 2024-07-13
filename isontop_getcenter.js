@@ -1,5 +1,6 @@
 
 // - Check if element is on top; requires getcenter()
+// - isontop(element) --> returns [element, centercoordinates]
 function isontop(el, { ignore } = {}) {
   // return (async () => {
   if (typeof el === "string") {
@@ -28,6 +29,7 @@ function isontop(el, { ignore } = {}) {
 }
 
 // - get center coordinates of element
+// - getcenter(element) -> returns {x:___, y:___}
 function getcenter(el) {
   if (!el) {
     // console.log("can't get center of null element", el);

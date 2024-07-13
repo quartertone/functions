@@ -7,7 +7,7 @@
 // - innerHTML is set to title attribute
 // - setting element.value="" will also set innerHTML to title again
 // - styles set in gridcal.css and showmonth.css
-// - Attributes: value = initial date ; data-locale = locale name ; title = initial label ; precheck = name of precheck function
+// - Attributes: value = initial date ; data-locale = locale name ; title = initial label ; precheck = name of precheck function ; clickfn = function to use in place of default fn in response to click event ; reset = if true, selecting the same date twice will reset calendar value ""
 customElements.define("grid-cal", class GridCalendar extends HTMLElement {
 
   set value(val) {

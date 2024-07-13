@@ -8,7 +8,7 @@ function oneshot() {
   }
 };
 
-// oneshot can be reset if:
+// oneshot can be reset:
 // x = oneshot;
 // x()
 // -- DO SOMETHING

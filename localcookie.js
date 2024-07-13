@@ -1,5 +1,6 @@
 // https://cordova.apache.org/docs/en/11.x/cordova/storage/storage.html
 // - set/read/delete "cookie" stored in localstorage
+// - localCookie(name, value)
 function localCookie(name, value) {
   // if only name, retrieve item value
   // if name & value, set item
