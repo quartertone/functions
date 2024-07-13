@@ -15,6 +15,11 @@ clock-face, .clock-face, [is="clock-face"] {
 }
 
 .corcledisplayer {
+  --cl-bg: #444;
+  --cl-border: #aaa;
+  --cl-fg: #fff;
+  --cl-hand: #ff2;
+  --cl-active: #2a2a;
   --basesize: 12em;
   --bordersize: 5px;
   z-index:150;
@@ -22,15 +27,15 @@ clock-face, .clock-face, [is="clock-face"] {
   top: 20%;
   left:50%;
   transform: translate(-50%);
-  background:var(--bodybg);
-  border:solid 2px var(--calborder);
+  background:var(--cl-bg);
+  border:solid 2px var(--cl-border);
   border-radius: 0.5em;
   width: calc(var(--bordersize)*2 + var(--basesize));
   /* height: calc(1.5em + var(--basesize)); */
   padding:0.25em;
 
 .corcletitle, .corcletimeshow {
-  color:var(--bodyfg);
+  color:var(--cl-fg);
   text-align: center;
   padding:0.25em;
 }
@@ -46,8 +51,8 @@ clock-face, .clock-face, [is="clock-face"] {
     width: var(--basesize);
     height: var(--basesize);
     clip-path: circle(calc(var(--basesize)/2 + 2px) at center);
-    border: var(--bordersize) var(--calborder) solid;
-    background: var(--bodybg);
+    border: var(--bordersize) var(--cl-border) solid;
+    background: var(--cl-bg);
     border-radius: 50%;
     text-align: center;
     /* font-size: calc(var(--basesize) / 9); */
@@ -68,7 +73,7 @@ clock-face, .clock-face, [is="clock-face"] {
     bottom: 0;
     clip-path: circle(calc(var(--basesize)/2 + 2px) at center);
     border-radius: 50%;
-    background: var(--bodybg);
+    background: var(--cl-bg);
     pointer-events: auto;
   }
 
@@ -92,10 +97,10 @@ clock-face, .clock-face, [is="clock-face"] {
 
   .dot.active {
     opacity:1;
-    background-color: var(--calbtnactive);
+    background-color: var(--cl-active);
 
     &::after {
-      color:var(--bodybg);
+      color:var(--cl-bg);
     }
   }
 
@@ -104,7 +109,7 @@ clock-face, .clock-face, [is="clock-face"] {
     position: absolute;
     /* height: calc(50% - var(--dotsize) * 0.7 - 0.5vw); */
     width: 2px;
-    background: var(--menubg);
+    background: var(--cl-hand);
     left: 50%;
     top: 50%;
     transform-origin: top;
@@ -118,7 +123,7 @@ clock-face, .clock-face, [is="clock-face"] {
     height: calc(var(--basesize) / 20);
     width: calc(var(--basesize) / 20);
     background: none;
-    border: solid 2px var(--menufg);
+    border: solid 2px var(--cl-hand);
     border-radius: 50%;
     /* z-index: 400; */
   }
@@ -129,7 +134,7 @@ clock-face, .clock-face, [is="clock-face"] {
   }
 
   &:hover:active .hand {
-    background: var(-menufg);
+    background: var(--cl-hand);
 
     .handdot {
       /* background: var(--menubg); */
@@ -146,6 +151,7 @@ clock-face, .clock-face, [is="clock-face"] {
     height: var(--dotsize);
     width: var(--dotsize);
     display: inline-block;
+    color:var(--cl-fg);
     margin: calc(0px - var(--dotsize) / 2);
     /* line-height: 1.5em; */
     /*margin: calc(
@@ -173,7 +179,7 @@ width: var(--dotsize); */
     position: relative;
     top: 55%;
     transform: translate(0, -50%);
-    color: var(--calbtnbg);
+    color: var(--cl-fg);
   }
 }
 

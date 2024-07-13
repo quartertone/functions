@@ -30,6 +30,13 @@ customElements.define("clock-face", class ClockFace extends HTMLElement {
     super();
 
 
+
+
+  }
+
+  connectedCallback() {
+
+    
     let digital = document.createElement("div");
     digital.className = "digital";
 
@@ -94,12 +101,12 @@ customElements.define("clock-face", class ClockFace extends HTMLElement {
       corcle.append(facehr, facemin, hand);
 
       clockdisplayer.append(clocktitle, clocktimeshow, corcle);
-      caldimbg(true, clockdisplayer);
+      let dimbg = makedimbg({source:clockdisplayer});
       document.body.append(clockdisplayer);
       // document.body.append(corcle);
 
       let corclestyle = getComputedStyle(corcle);
-      let animdelay = corclestyle.getPropertyValue("--animspeed").match(/^([\.\d]*)s/)[1] * 1000;
+      let animdelay = 1000; //corclestyle.getPropertyValue("--animspeed").match(/^([\.\d]*)s/)[1] * 1000;
 
       // start display with hours. Minutes are displayed after hour is selected
 
@@ -202,7 +209,7 @@ customElements.define("clock-face", class ClockFace extends HTMLElement {
               basethis.value = digihr.innerText + ":" + digimin.innerText;
               activeunit = "hr";
               clockdisplayer.remove();
-              caldimbg(false);
+              dimbg.click();
             }
           }
           clocktimeshow.innerHTML = digital.textContent;
@@ -266,8 +273,8 @@ customElements.define("clock-face", class ClockFace extends HTMLElement {
           // console.log(key, " ?? ", angle, val);
           let lowerlim = parseFloat(key) - parseFloat(collection.delta);
           let upperlim = parseFloat(key) + parseFloat(collection.delta);
-          if (between(angle, lowerlim, upperlim, true)
-            || between(angle + Math.PI * 2, lowerlim, upperlim, true)) {
+          if (isbetween(angle, lowerlim, upperlim, true)
+            || isbetween(angle + Math.PI * 2, lowerlim, upperlim, true)) {
             // if (limit) console.log("limit", limit);
             if (limit && limit < clickradius) { // pick the second one
               founddot = val[1];
@@ -439,11 +446,6 @@ customElements.define("clock-face", class ClockFace extends HTMLElement {
 
     };
 
-
-
-  }
-
-  connectedCallback() {
   }
 });
 
