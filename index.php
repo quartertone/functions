@@ -27,6 +27,10 @@
 
   ?>
   <style>
+    body {
+      background:#222;
+      color:#fff;
+    }
     grid-cal {
       margin: 2em;
     }
@@ -41,11 +45,10 @@
 
   <!-- <input type="checkbox" class="slider" id="ck" />CHECK<br /> -->
 
-  <div id="out"></div>
-  <div id="two"></div>
+  <!-- <div id="out"></div> -->
+  <!-- <div id="two"></div> -->
 
-  <!-- <clock-face></clock-face> -->
-
+  <clock-face></clock-face>
   <script>
     let gc = document.querySelector("grid-cal");
     let ck = document.querySelector("#ck");
@@ -54,15 +57,13 @@
       // return ck.checked;
       return true;
     }
-
-
-
-
-    showmonth({
-      locale: "es",
-      anchor: document.querySelector("#two"),
-      precal: 1
-    })
+    
+    
+    // showmonth({
+    //   locale: "es",
+    //   anchor: document.querySelector("#two"),
+    //   precal: 1
+    // })
   </script>
 </body>
 
