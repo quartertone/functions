@@ -15,6 +15,10 @@ addcss.js
     - addCSS(css, [id])
 
 arrayequivalent.js
+  - arrayequivalent
+    - bidirectional array equiv checker
+    - Check if two arrays are equivalent (contain the same elements)
+    - arrayequivalent(array1, array2)
 
 arrayshuffle.js
   - ashuffle:
