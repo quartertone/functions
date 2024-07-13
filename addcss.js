@@ -3,10 +3,10 @@
 // - css = style document text
 // - id = optional ID for style element
 // - addCSS(css, [id])
-function addCSS(css, id=null) {
-let styl = document.querySelector(`#${id}`) ?? document.createElement("style");
+function addCSS(css, id, anchor) { // append CSS style element to head
+	let styl = document.querySelector(`#${id}`) ?? document.createElement("style");
   styl.innerHTML = css;
-  if (id) styl.id = id;
-  document.head.appendChild(styl);
+  styl.id = id;
+  anchor ? anchor.appendChild(styl) : document.head.appendChild(styl);
   return styl;
 }
