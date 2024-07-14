@@ -1,7 +1,7 @@
 
 // - "sleep" function for use inside async functions
 // - promisetimeout(miliseconsd)
-function promisetimeout(timeout) {
+async function promisetimeout(timeout) {
   return new Promise((resolve, reject) => {
     setTimeout(resolve, timeout);
   });

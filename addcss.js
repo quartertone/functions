@@ -2,7 +2,6 @@
 // - Returns appended style element
 // - css = style document text
 // - id = optional ID for style element
-// - addCSS(css, [id])
 function addCSS(css, id, anchor) { // append CSS style element to head
 	let styl = document.querySelector(`#${id}`) ?? document.createElement("style");
   styl.innerHTML = css;

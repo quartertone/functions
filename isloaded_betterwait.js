@@ -6,7 +6,6 @@
 
 // - wait until element is loaded
 // - resolve promise when element is loaded (uses requestAnimationFrame)
-// - isElementLoaded(selector).then( ...
 async function isElementLoaded(selector) {
   // const isElementLoaded = async selector => {
   while (document.querySelector(selector) === null) {
@@ -29,7 +28,6 @@ async function isElementLoaded(selector) {
 // - resolve promise when condition becomes true
 // - uses setTimeout and polling interval
 // - consider switching to [requestAnimationFrame](https://css-tricks.com/using-requestanimationframe/)
-// - betterWait(conditionFunction, {poll, timeout, stopper}).then( ...
 async function betterWait(conditionFunction, { poll = 1000, timeout = 600000, stopper = { stop: false } } = {}) {
   // use destructuring to make it easier to hold onto default values
   let stopwatch = new Date().getTime();

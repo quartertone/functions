@@ -1,9 +1,8 @@
 // - scroll an element into view
-// - scrollto(element)
-function scrollto(el) {
-  if (typeof el === "string") {
+function scrollto(element) {
+  if (typeof element === "string") {
     // console.log("checking", el);
-    el = document.querySelector(el);
+    element = document.querySelector(element);
   }
-  el.scrollIntoView({ behavior: "smooth", block: "center" });
+  element.scrollIntoView({ behavior: "smooth", block: "center" });
 }

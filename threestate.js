@@ -1,4 +1,4 @@
-// - three-state slider
+// - three-state slider initialization function
 // - assocaited styles in threestate.css
 function threestate(target) {
   // usage:

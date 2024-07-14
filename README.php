@@ -9,7 +9,9 @@
 
 <body>
   <pre>
-# Collection of useful Javascript functions
+# Collection of Javascript functions
+### (Mostly useful, some superfluous)
+
 <?php
 
 $jsfiles = array_merge(
@@ -28,12 +30,14 @@ foreach ($jsfiles as $file) {
   $comments = "";
   while ($line = fgets($fh)) {
     if (
-      preg_match("/^(async )?function (.*?) ?\(/", $line, $match)
+      preg_match("/^(async )?function (.*?\(.*\))/", $line, $match)
       || preg_match("/^(var) (\w*?) ?=.*function/", $line, $match)
       || preg_match("/^(customElements.define\(\")(.*?)\"/", $line, $match)
 
     ) {
-      $comments = "  - $match[2]:\n$comments";
+      $comments = "  $match[2]"
+      . ($match[1]=="async " ? ".then(...": "")
+      . ":\n$comments";
       echo $comments;
       $comments = "";
     } else if (preg_match("/^\/\/ - (.*)$/", $line, $match)) {

@@ -1,11 +1,11 @@
 /*
-if title is given, only one month is shown
+if title is given, only one month is shown ??? did I do this?
 this is to prevent wierdness with buttons
 */
 // - display interactive calendar
 // - option for showing multiple months
 // - styles set in showmonth.css
-// - showmonth({ refdate, precal, postcal, anchor, classes, locale, clickfn, title })
+// - parameters: refdate = initial date ; precal/postcal = how many months to show before/after index month ; anchor = base element for calholder ; classes = classname(s) ; locale = language locale, clickfn = function to use in place of default fn in response to click event ; title = calendar title 
 function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", locale = "default", clickfn, title = "" } = {}) {
 
 

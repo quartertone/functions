@@ -1,5 +1,4 @@
 // - simulate click event on x,y coordinates (in pixels)
-// - clickpoint(x,y)
 function clickpoint(x, y) {
   var ev = new MouseEvent('click', {
     'view': window,

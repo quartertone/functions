@@ -1,5 +1,4 @@
 // - INPUT text entry simulator
-// - inputit(element, newtext, {clobber, interval})
 function inputit(element, newtext, { clobber = false, interval = 100 } = {}) {
   return new Promise((resolve, reject) => {
     function doinput(element, newval, clobber) {

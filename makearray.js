@@ -1,5 +1,4 @@
 // - convenience function to create an array of x numbers, or an array with values between x and y
-// - makearray(start,end)
 function makearray(start, end) {
   if (!end) {
     end = start - 1;

@@ -1,5 +1,4 @@
 // - download given data as a file
-// - downloaddata(data_string, filename, extension, promptText)
 function downloaddata(data, name, ext, promptText) {
   let exportfile = name + datefromUTC(new Date()) + ext;
   exportfile = prompt(promptText, exportfile);

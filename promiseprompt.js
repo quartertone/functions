@@ -1,8 +1,7 @@
 
 // - interactive dialog that resolves to a promise. Requires makedimbg
 // - necessary styles in promiseprompt.css 
-//  promiseprompt(promptext, { placeholder, defaulttext, oktext, canceltext, id, classes, confirm, html, okfn}).then( ...
-function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext = "Ok", canceltext = "Cancel", id = "promiseprompt", classes, confirm = false, html = false, okfn = async function () { return true; } } = {}) {
+async function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext = "Ok", canceltext = "Cancel", id = "promiseprompt", classes, confirm = false, html = false, okfn = async function () { return true; } } = {}) {
   // Note: deconstructed object can be passed as a regular object
   return new Promise((resolve, reject) => {
 
