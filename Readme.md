@@ -1,6 +1,7 @@
 
 
-# Collection of useful Javascript functions
+# Collection of Javascript functions and CSS
+### (some useful, some not as useful)
 
 WORKINPROGRESS.js
   - tri-check:
