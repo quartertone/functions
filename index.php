@@ -4,67 +4,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <?php
-
-  $jsfiles = array_merge(
-    glob("*.js"),
-    glob("inprogress/*.js")
-  );
-  $cssfiles = array_merge(
-    glob("*.css"),
-    glob("inprogress/*.css")
-  );
-
-
-  foreach ($jsfiles as $jsfile) {
-    echo "<script src='$jsfile'></script>\n";
-  }
-
-  foreach ($cssfiles as $cssfile) {
-    echo "<link rel='stylesheet' href='$cssfile' />\n";
-  }
-
-  ?>
+  <title>Readme</title>
   <style>
     body {
-      background:#222;
-      color:#fff;
-    }
-    grid-cal {
-      margin: 2em;
+      color: #fff;
+      background: #000;
     }
   </style>
 </head>
 
 <body>
+  <pre>
+# Collection of Javascript functions
+### (Mostly useful, some superfluous)
 
-  <br />
-  <grid-cal  data-locale="en" title="CALENDRA" precheck="testcal" reset="true"></grid-cal>
-  <br />
+<?php
 
-  <!-- <input type="checkbox" class="slider" id="ck" />CHECK<br /> -->
+$jsfiles = array_merge(
+  glob("*.js"),
+  glob("inprogress/*.js")
+);
+$cssfiles = array_merge(
+  glob("*.css"),
+  glob("inprogress/*.css")
+);
 
-  <!-- <div id="out"></div> -->
-  <!-- <div id="two"></div> -->
 
-  <clock-face></clock-face>
-  <script>
-    let gc = document.querySelector("grid-cal");
-    let ck = document.querySelector("#ck");
+foreach ($jsfiles as $file) {
+  echo "\n$file\n";
+  $fh = fopen($file, 'r');
+  $comments = "";
+  while ($line = fgets($fh)) {
+    if (
+      preg_match("/^(async )?function (.*?\(.*\))/", $line, $match)
+      || preg_match("/^(var) (\w*?) ?=.*function/", $line, $match)
+      || preg_match("/^(customElements.define\(\")(.*?)\"/", $line, $match)
 
-    function testcal(e) {
-      // return ck.checked;
-      return true;
+    ) {
+      $comments = "  $match[2]" . ($match[1] == "async " ? ".then(..." : "") . "\n$comments";
+      echo $comments;
+      $comments = "";
+    } else if (preg_match("/^\/\/ - (.*)$/", $line, $match)) {
+      // print_r($match);
+      // var_dump($comments);
+      $comments .= "    - $match[1]\n";
     }
-    
-    
-    // showmonth({
-    //   locale: "es",
-    //   anchor: document.querySelector("#two"),
-    //   precal: 1
-    // })
-  </script>
+  }
+  fclose($fh);
+}
+
+?>
+</pre>
+
 </body>
 
 </html>
