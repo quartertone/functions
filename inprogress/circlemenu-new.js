@@ -232,50 +232,51 @@ function autowidth(anchor) {
   }
 
   anchor.style.setProperty('--menuwidth', (0.5 + Math.max(...widths)) + "em");
+	
   //console.log("menufixedwidth", (0.5 + Math.max(...widths)) + "em");
-  if (anchor.config.banner) {
+  // if (anchor.config.banner) {
 
-    //banner options: number of items to show in banner if too narrow		
-
-
-    let style = null;
-    if (!document.getElementById(anchor.id + "_maxwidth")) {
-      style = document.createElement('style');
-      // style.type = 'text/css';
-      style.id = anchor.id + "_maxwidth";
-      document.head.appendChild(style);
-    } else {
-      style = document.getElementById(anchor.id + "_maxwidth");
-    }
-    style.innerHTML = "";
-
-    //console.log(widths, (widths.reduce((a, b) => a + b, 0) + "em"));
-
-    // THIS gives wrong sum because of font size scaling. menu font is 75% of baseline
-    // CRAPPY HACK = divide by 75%
-    style.innerHTML += "\n@media only screen and (min-width:" + ((1 / 0.85) * widths.reduce((a, b) => a + b, 0) + "em") + ") {"
-      + "main { padding-top: calc(var(--navheight) + " + anchor.styles.lineheight + ") }"
-      + "#" + anchor.id + " label.show-menu {display: flex; position: fixed; left: 0; flex-direction: row; justify-content: flex-end; width: 100%; top: var(--navheight); }"
-      + "#" + anchor.id + " .btn:first-child { display:none; }"
-      //+ "#" + anchor.id + " .btn:first-child { right:0 !important; }" //CRAPPY HACK
-      + "#" + anchor.id + " .btn:not(:first-child) { position:relative!important; top: 0 !important; opacity: 1 !important; pointer-events: auto; z-index:1000;}" + "}";
+    // //banner options: number of items to show in banner if too narrow		
 
 
-    if (anchor.config.banner >= 2) {
-      style.innerHTML += "\n@media only screen and (min-width:" + ((1 / 0.85) * bannerwidths.reduce((a, b) => a + b, 0) + "em") + ") and (max-width:" + ((1 / 0.85) * widths.reduce((a, b) => a + b, 0) + "em") + ") {"
-        + "main { padding-top: calc(var(--navheight) + " + anchor.styles.lineheight + ") }"
-        + "#" + anchor.id + " input[type=\"checkbox\"]:not(:checked) ~ label.show-menu {display: flex; position: fixed; left: 0; flex-direction: row; justify-content: flex-end; width: 100%; top: var(--navheight); }"
+    // let style = null;
+    // if (!document.getElementById(anchor.id + "_maxwidth")) {
+      // style = document.createElement('style');
+      // // style.type = 'text/css';
+      // style.id = anchor.id + "_maxwidth";
+      // document.head.appendChild(style);
+    // } else {
+      // style = document.getElementById(anchor.id + "_maxwidth");
+    // }
+    // style.innerHTML = "";
 
-        //CRAPPY HACK for fixed icon
-        + "#" + anchor.id + " input[type=\"checkbox\"]:not(:checked) ~ label .btn:first-child { position: fixed; top: 0 !important; right:0 !important; }";
-      for (i = 1; i <= anchor.config.banner + 1; i++) {
-        style.innerHTML += "#" + anchor.id + " input[type=\"checkbox\"]:not(:checked) ~ label .btn:nth-child(" + i + "), ";
-      }
-      //style.innerHTML += "#RANDOMBLAH { position:relative!important; top: 0 !important; opacity: 1 !important; pointer-events: auto; z-index:1000;}";
+    // //console.log(widths, (widths.reduce((a, b) => a + b, 0) + "em"));
 
-    }
+    // // THIS gives wrong sum because of font size scaling. menu font is 75% of baseline
+    // // CRAPPY HACK = divide by 75%
+    // style.innerHTML += "\n@media only screen and (min-width:" + ((1 / 0.85) * widths.reduce((a, b) => a + b, 0) + "em") + ") {"
+      // + "main { padding-top: calc(var(--navheight) + " + anchor.styles.lineheight + ") }"
+      // + "#" + anchor.id + " label.show-menu {display: flex; position: fixed; left: 0; flex-direction: row; justify-content: flex-end; width: 100%; top: var(--navheight); }"
+      // + "#" + anchor.id + " .btn:first-child { display:none; }"
+      // //+ "#" + anchor.id + " .btn:first-child { right:0 !important; }" //CRAPPY HACK
+      // + "#" + anchor.id + " .btn:not(:first-child) { position:relative!important; top: 0 !important; opacity: 1 !important; pointer-events: auto; z-index:1000;}" + "}";
 
-  }
+
+    // if (anchor.config.banner >= 2) {
+      // style.innerHTML += "\n@media only screen and (min-width:" + ((1 / 0.85) * bannerwidths.reduce((a, b) => a + b, 0) + "em") + ") and (max-width:" + ((1 / 0.85) * widths.reduce((a, b) => a + b, 0) + "em") + ") {"
+        // + "main { padding-top: calc(var(--navheight) + " + anchor.styles.lineheight + ") }"
+        // + "#" + anchor.id + " input[type=\"checkbox\"]:not(:checked) ~ label.show-menu {display: flex; position: fixed; left: 0; flex-direction: row; justify-content: flex-end; width: 100%; top: var(--navheight); }"
+
+        // //CRAPPY HACK for fixed icon
+        // + "#" + anchor.id + " input[type=\"checkbox\"]:not(:checked) ~ label .btn:first-child { position: fixed; top: 0 !important; right:0 !important; }";
+      // for (i = 1; i <= anchor.config.banner + 1; i++) {
+        // style.innerHTML += "#" + anchor.id + " input[type=\"checkbox\"]:not(:checked) ~ label .btn:nth-child(" + i + "), ";
+      // }
+      // //style.innerHTML += "#RANDOMBLAH { position:relative!important; top: 0 !important; opacity: 1 !important; pointer-events: auto; z-index:1000;}";
+
+    // }
+
+  // }
 }
 
 
@@ -398,7 +399,7 @@ var configuration = {
 	  rounded: false, // t/f rounded borders
   direction: 1, // default 1; 1 = clockwise/down, -1 = counterclockwise/up
       // this is experimental and needs some work
-	banner: 1, //working on partial banner display, where X number of items display in banner.
+	//banner: 1, //working on partial banner display, where X number of items display in banner.
   style: "linear", // rounded or linear
   // arc: {auto calculated}, // angle in degrees, default is calculated according to btnsize and radius
   // startpoint: {auto calculated} // angle in degrees, default is calculated according to arc centered on the zenith
