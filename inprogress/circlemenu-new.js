@@ -8,10 +8,6 @@ by @quartertone
 
 */
 
-
-
-
-
 const BUTTONCLASS = "btn";
 
 function floatmenu(styles, config, anchor) {
@@ -30,7 +26,7 @@ function floatmenu(styles, config, anchor) {
 	styles.linearbg ??= "#444";
 	styles.gapsize ??= "2px"; // optional,gap between menu items
 	styles.radius ??= "7em";
-  styles.leftright ??= "left:0px;";
+  styles.leftright ??= "left:0;";
 		
 for (let [name,value] of Object.entries(styles)) {
     anchor.style.setProperty('--'+name, value);
@@ -39,11 +35,8 @@ for (let [name,value] of Object.entries(styles)) {
     config.ellipse ??= 1;
 
 
-  if (config.hasOwnProperty("rounded") && config.rounded == false) { //default rounded to btnsize
-    anchor.style.setProperty('--borderradius', "0");
-  } else {
-    //anchor.style.setProperty('--menuimgmargins', "0");
-  }
+ //default rounded to btnsize
+  if (config.rounded == false) anchor.style.setProperty('--borderradius', "0");
 
 	// need to set width so that positioning works correctly
   anchor.style.width = "var(--btnsize)"; 
@@ -53,7 +46,6 @@ for (let [name,value] of Object.entries(styles)) {
 	//autocalculate ARC so that each button is equidistant 1/2 btnsize apart
 	config.arc ??= 360 * ((styles.btnsize.replace(/\D+/g, '')) * (1.5 * anchor.numitems - 1)) / (Math.PI * 2 * (styles.radius.replace(/\D+/g, '')));
   if (config.arc > 360) config.arc = 360; //max full circle
-
 
   var startangle = config.hasOwnProperty("startpoint") ? 180 - config.startpoint : 180 - (180 - config.arc) / 2;
   var endangle = startangle - config.arc;
@@ -68,63 +60,42 @@ for (let [name,value] of Object.entries(styles)) {
 // TODO: CLEAN UP and change to addCSS here also
   var style = document.createElement('style');
   //style.type = 'text/css';
-  style.innerHTML = `
+   style.innerHTML = `
 	
-	#${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn .menuBtn {transform: translateY(-50px); opacity: 0;}
+	 #${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn .menuBtn {opacity: 0;}
 	
-  #${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn .closeBtn {transform: translateY(0px); opacity: 1;}
-	
-	`;
-	
-	// "#" + anchor.id + ".circlemenu input#" + TOGGLEID + ":checked ~ .show-menu .btn .menuBtn {transform: translateY(-50px); opacity: 0;}\n" +
-    // "#" + anchor.id + ".circlemenu input#" + TOGGLEID + ":checked ~ .show-menu .btn .closeBtn {transform: translateY(0px); opacity: 1;}\n";
-
+   #${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn .closeBtn { opacity: 1;}`; //transform: translateY(0);
+ //transform: translateY(-50px); 
+ 
   for (i = 0; i < anchor.numitems; i++) {
-    var nth = i + 1;
+    let nth = i + 1;
+		let inverse = anchor.numitems - i; // so that cascading menu items flow behind item above it // goes with buttonlist.reverse() below
     style.innerHTML += `
-		
-		#${anchor.id} .btn:nth-child(${nth}) {
-     top:0px;
-		 ${styles.leftright};
+		#${anchor.id} .btn:nth-child(${inverse}) {
+     top:0em;
+		 ${config.style == "rounded" ? "left:0;" : styles.leftright};
 			transition-delay: ${i * styles.flingdelay}s;}
 			
-	#${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn:nth-child(${nth}) {
+	#${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn:nth-child(${inverse}) {
 		`;
-		
-		
-		
-		// "#" + anchor.id + " .btn:nth-child(" + nth + ") {" +
-      // "top:0px;" + styles.leftright + ";" +
-      // "-webkit-transition-delay: " + (i) * styles.flingdelay + "s;" +
-      // "transition-delay: " + (i) * styles.flingdelay + "s;}\n\n" +
-
-      // "#" + anchor.id + ".circlemenu input#" +
-      // TOGGLEID + ":checked ~ .show-menu .btn:nth-child(" + nth + ") {\n";
 
     if (config.style == "linear") {
-      // var topgap = "top: calc( (" + config.direction + " *( var(--btnsize) + (" + styles.lineheight + " + " + styles.gapsize + ") * " + i + ")));";
-      // if (config.direction == -1) topgap = "top: calc( (" + config.direction + " *( var(--lineheight) + (" + styles.lineheight + " + " + styles.gapsize + ") * " + i + ")));";
-
       style.innerHTML += `
 			${styles.leftright};
-			top: calc( (${config.direction} *( var(--btnsize) + (${styles.lineheight} + ${styles.gapsize}) * ${i})));
+			top: calc( (${config.direction} *( var(--lineheight) + (${styles.lineheight} + ${styles.gapsize}) * ${i})));
 			opacity:1;
 		}
 			`;
-        // styles.leftright + ";" +
-        // topgap +
-        // "opacity:1;\n}\n\n";
+			
     } else { //CIRCULAR MENU
       var thisangle = toradians(startangle - (theta * i));
       if (config.direction == -1) {
         thisangle = toradians(endangle + (theta * i));
       }
 
-      style.innerHTML += "left: calc(" + styles.radius + " * " +
-        ellipseXaxis * Math.cos(thisangle) + ");" +
-        "top: calc(" + styles.radius + " * " +
-        (config.ellipse * (-Math.sin(thisangle)) - vertoffset) +
-        "); opacity:1;\n}\n\n";
+      style.innerHTML += `
+			left: calc(${styles.radius} * ${ellipseXaxis * Math.cos(thisangle)});
+			top: calc(${styles.radius} * ${config.ellipse * (-Math.sin(thisangle)) - vertoffset}); opacity:1;}`;
     }
   }
 
@@ -167,9 +138,13 @@ for (let [name,value] of Object.entries(styles)) {
   }
 
 
+console.log(buttonlist);
 
-  for (idx in buttonlist) {
+  for (idx in buttonlist.reverse()) {
+		// for (let idx = buttonlist.length -1; idx >=0; idx--) {
+			console.log(idx);
     var btn = buttonlist[idx];
+		console.log(btn);
     if (btn.hidden == true) continue;
     // var trigger = document.createElement(btn.link ? "a" : "div");
     var trigger = document.createElement("a");
@@ -219,37 +194,6 @@ for (let [name,value] of Object.entries(styles)) {
 
 
 
-// //Close menu when clicking outside the menu. Click registers as expected on clicked element
-// window.addEventListener("mousedown", function (e) {
-  // let circlemenus = document.getElementsByClassName("circlemenu");
-  // for (let i = 0; i < circlemenus.length; i++) {
-    // // iterate for each circle menu
-    // if (circlemenus[i].getElementsByTagName("input")[0].checked) {
-      // // this IF says to go with default action (toggle menu or follow menu item)
-      // // 	  if toggleBtn/btn, or their children, are clicked
-      // //console.log(e.target);
-      // if (
-        // e.target.nodeName == "HTML" ||
-        // (!(e.target.className).match("toggleBtn|btn") &&
-          // !((e.target).parentElement.className).match("toggleBtn|btn"))
-      // ) {
-        // circlemenus[i].getElementsByTagName("input")[0].checked = false;
-      // }
-    // } else { continue; }
-  // }
-// });
-
-// window.addEventListener("keyup", function (e) {
-  // let circlemenus = document.getElementsByClassName("circlemenu");
-  // //		console.log(circlemenus[0]);
-  // if (e.key == "Escape") {
-    // for (let i = 0; i < circlemenus.length; i++) {
-      // circlemenus[i].getElementsByTagName("input")[0].checked = false;
-    // }
-  // }
-// });
-
-
 
 ////////////////////
 // Convert to Rad //
@@ -257,97 +201,6 @@ for (let [name,value] of Object.entries(styles)) {
 function toradians(degrees) {
   return degrees * Math.PI / 180;
 };
-
-
-
-
-////////////////////
-// APPEND TO MENU //
-////////////////////
-
-function appendtolinear(config, anchor) {
-  var TOGGLEID = anchor.id + "toggle";
-  var additems = config.data.length;
-  var newitemcount = anchor.numitems + additems;
-  //var leftright;
-  // switch (anchor.styles.leftright) {
-    // case "left":
-      // leftright = "left:0px";
-      // break;
-    // case "right":
-      // leftright = "right:0px";
-      // break;
-  // }
-
-
-
-
-// TODO : CHANGE TO addCSS
-
-  var style = document.createElement('style');
-
-  for (i = anchor.numitems; i <= (additems + anchor.numitems); i++) {
-    var nth = i + 1;
-    style.innerHTML +=`
-	#${anchor.id} .btn:nth-child(${nth}) {
-    top:0px;
-		${anchor.styles.leftright};
-    transition-delay: ${i * anchor.styles.flingdelay}s;
-	}
-
-	#${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn:nth-child(${nth}) {
-	${anchor.styles.leftright};
-	top: calc( (${anchor.config.direction} * ( var(--lineheight) + (${anchor.styles.lineheight} + ${anchor.styles.gapsize}) * ${i})));
-  opacity:1;
-	}
-`;
-
-// if negative direction, use lineheight???
-
-  }
-
-//  document.head.appendChild(style);
-
-
-
-  buttonlist = config.data;
-
-  var menulabel = document.getElementById(anchor.id + "_menulabel");
-
-  for (idx in buttonlist) {
-    let btn = buttonlist[idx];
-    let trigger = document.createElement("a");
-    trigger.classList.add(BUTTONCLASS);
-    trigger.id = btn.id;
-    trigger.title = btn.alt;
-    //trigger._target="_blank"; trigger.rel="noopener"; //optional
-
-    // if (btn.link != "") trigger.href = btn.link;
-    if (btn.link != "") {
-      let btnlink = btn.link;
-      trigger.onclick = function (e) {
-        window.location.assign(btnlink);
-      };
-    }
-
-    var img = document.createElement("img");
-    //img.id = "img_" + btn.id;
-    img.alt = btn.alt;
-    img.src = btn.src;
-    trigger.insertBefore(img, null);
-    var span = document.createElement("span");
-    span.innerHTML = btn.alt;
-    trigger.insertBefore(span, null);
-    menulabel.insertBefore(trigger, null);
-  }
-
-  //	anchor.insertBefore(menulabel, null); // no need, it's already there.
-  anchor.numitems += config.data.length;
-
-  // this is linear menu, so don't need (if)
-  autowidth(anchor);
-
-} //END APPEND
 
 
 
@@ -418,7 +271,7 @@ function autowidth(anchor) {
       for (i = 1; i <= anchor.config.banner + 1; i++) {
         style.innerHTML += "#" + anchor.id + " input[type=\"checkbox\"]:not(:checked) ~ label .btn:nth-child(" + i + "), ";
       }
-      style.innerHTML += "#RANDOMBLAH { position:relative!important; top: 0 !important; opacity: 1 !important; pointer-events: auto; z-index:1000;}";
+      //style.innerHTML += "#RANDOMBLAH { position:relative!important; top: 0 !important; opacity: 1 !important; pointer-events: auto; z-index:1000;}";
 
     }
 
@@ -528,8 +381,8 @@ function makedimbg({ source, parentbox, before, onclickfn, fadetime = "0.35s", a
 //// USAGE EXAMPLE:
 
 let styles =  {
-		flingdelay: 0.01, // animation delay in seconds (for staggered opening)
-		menuspeed: 0.5, // animation speed /// change name to menuspeed
+		flingdelay: 0.2, // animation delay in seconds (for staggered opening)
+		menuspeed: 1, // animation speed /// change name to menuspeed
 		btnsize: "3em", // size of buttons
 		menuwidth: "8em", // width of menu items
 		imgsize: "3em", // defaults to btnsize, this is the size of the image icons within the linear menu items
@@ -537,7 +390,7 @@ let styles =  {
 		linearbg: "#449", // bg color of linear menu items
 		gapsize: "2px", // gap between linear menu items
 		radius: "7em", // radius of the circle along which icons are placed
-		leftright: "right:0"
+		leftright: "right:0em;"
 	};
 	
 	
@@ -545,13 +398,13 @@ var configuration = {
 	  rounded: false, // t/f rounded borders
   direction: 1, // default 1; 1 = clockwise/down, -1 = counterclockwise/up
       // this is experimental and needs some work
-      //working on partial banner display, where X number of items display in banner.
+	banner: 1, //working on partial banner display, where X number of items display in banner.
   style: "linear", // rounded or linear
   // arc: {auto calculated}, // angle in degrees, default is calculated according to btnsize and radius
   // startpoint: {auto calculated} // angle in degrees, default is calculated according to arc centered on the zenith
           // zero is set to the left side of the X axis just because that's how I like it.
   ellipse: 1, //change this to make the arc narrow(<1) or tall(>1)
-  alignbottom: false, // t/f whether to bring the arc down so the two ends line up with menu opener					
+  alignbottom: true, // t/f whether to bring the arc down so the two ends line up with menu opener					
         	
   // DATA is required
   data: [ //first two items comprise the menu opener (open / close)
@@ -594,5 +447,86 @@ var configuration = {
 
 floatmenu(styles,configuration, document.querySelector("#btn"));
 
+
+
+
+
+// DO THIS LATER
+// ////////////////////
+// // APPEND TO MENU //
+// ////////////////////
+
+// function appendtolinear(config, anchor) {
+  // var TOGGLEID = anchor.id + "toggle";
+  // var additems = config.data.length;
+  // var newitemcount = anchor.numitems + additems;
+
+
+// // TODO : CHANGE TO addCSS
+
+  // var style = document.createElement('style');
+
+  // for (i = anchor.numitems; i <= (additems + anchor.numitems); i++) {
+    // var nth = i + 1;
+    // style.innerHTML +=`
+	// #${anchor.id} .btn:nth-child(${nth}) {
+    // top:0;
+		// ${anchor.styles.leftright};
+    // transition-delay: ${i * anchor.styles.flingdelay}s;
+	// }
+
+	// #${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn:nth-child(${nth}) {
+	// ${anchor.styles.leftright};
+	// top: calc( (${anchor.config.direction} * ( var(--lineheight) + (${anchor.styles.lineheight} + ${anchor.styles.gapsize}) * ${i})));
+  // opacity:1;
+	// }
+// `;
+
+// // if negative direction, use lineheight???
+
+  // }
+
+ // document.head.appendChild(style);
+
+
+
+  // buttonlist = config.data;
+
+  // var menulabel = document.getElementById(anchor.id + "_menulabel");
+
+  // for (idx in buttonlist) {
+    // let btn = buttonlist[idx];
+    // let trigger = document.createElement("a");
+    // trigger.classList.add(BUTTONCLASS);
+    // trigger.id = btn.id;
+    // trigger.title = btn.alt;
+    // //trigger._target="_blank"; trigger.rel="noopener"; //optional
+
+    // // if (btn.link != "") trigger.href = btn.link;
+    // if (btn.link != "") {
+      // let btnlink = btn.link;
+      // trigger.onclick = function (e) {
+        // window.location.assign(btnlink);
+      // };
+    // }
+
+    // var img = document.createElement("img");
+    // //img.id = "img_" + btn.id;
+    // img.alt = btn.alt;
+    // img.src = btn.src;
+    // trigger.insertBefore(img, null);
+    // var span = document.createElement("span");
+    // span.innerHTML = btn.alt;
+    // trigger.insertBefore(span, null);
+    // menulabel.insertBefore(trigger, null);
+  // }
+
+  // //	anchor.insertBefore(menulabel, null); // no need, it's already there.
+  // anchor.numitems += config.data.length;
+
+  // // this is linear menu, so don't need (if)
+  // autowidth(anchor);
+
+// } //END APPEND
 
 
