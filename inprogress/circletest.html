@@ -39,6 +39,16 @@ left: 50%;
 </div>
 <script>
 
+let xscripts = [];
+let xstyles = [];
+
+for (let s of xscripts) {
+	loadScript(s,{id:s.match(/^(.*)\./)[1]});
+}
+
+for (let s of xstyles) {
+	loadCSS(s,s.match(/^(.*)\./)[1]);
+}
 </script>
 
 
