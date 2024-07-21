@@ -1,0 +1,164 @@
+
+/*
+* {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+*/
+
+:root {
+	--menuspeed: 0.5;
+	--btnsize: 3em;
+	--imgsize: 3em;
+	--borderradius: var(--btnsize);
+	--menuwidth: 8em;
+	--bordercolor: #77a;
+	--menuimgmargins: 0.4em;
+	--lineheight: var(--btnsize);
+}
+
+
+/* .circlemenu, .linearmenu {
+/*	z-index: 100;* /
+} */
+
+.circlemenu {
+		& input {
+		position: absolute;
+		display: none;
+	}
+
+	 & label {
+		user-select: none;
+	}
+
+	 & img {
+		height: var(--imgsize);
+		width: var(--imgsize);
+	/* 	height: 100%; TODO FIXME  make this so that --imgsize variable will work here. for some reason shows up cut off
+		width: 100%;*/
+		vertical-align: middle;
+	}
+
+
+	 .btn {
+		width: var(--imgsize);
+		height: var(--imgsize);
+		border-radius: var(--borderradius);
+		position: absolute;
+		overflow: hidden;
+		cursor: pointer;
+	/*	display: -webkit-box;
+		display: -ms-flexbox;
+		-webkit-box-pack: flex-start;
+		-ms-flex-pack: flex-start;
+		justify-content: flex-start;
+		-webkit-box-align: flex-start;
+		-ms-flex-align: flex-start;
+	*/	display: flex;
+		align-items: flex-start;
+		flex-direction:row;
+		
+		/* comment this out if you don't want box shadow */
+		background: #ECEFF1;
+		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+		/* */
+		
+		/* -webkit-transition: all calc( 0.5 * var(--menuspeed) * 1s) cubic-bezier(.25,.8,.25,1); */
+		transition: all calc( 0.5 * var(--menuspeed) * 1s) cubic-bezier(.25,.8,.25,1);
+	}
+	
+	
+	 & input[type="checkbox"] ~ label .btn:not(.togglediv) { /*:first-child) {*/
+	pointer-events: none;
+	}
+
+	 & input[type="checkbox"]:checked ~ label .btn:not(.togglediv){ /*:first-child) {*/
+	pointer-events: auto;
+	}
+
+
+
+
+}
+
+.btn.togglediv img { /*:first-child img {*/
+	height: var(--btnsize);
+	width: var(--btnsize);
+	margin:auto;
+}
+
+/*.btn a { color: #03A9F4; background: red;}*/
+
+
+/* .linearmenu .show-menu {
+/*	position:absolute; removed bc this was causing menu to appear shifted to the left* / 
+} */
+
+.linearmenu {
+	
+	.btn {
+		position: absolute;
+		overflow: visible;
+		height: var(--lineheight);
+		line-height: var(--lineheight);	
+		width: var(--menuwidth);
+		border-radius: var(--borderradius);
+		align-items:stretch;
+		/* border:solid 1px var(--bordercolor); */
+		background: var(--linearbg);
+		white-space: nowrap;
+
+		& * {
+			margin-top:auto;
+			margin-bottom:auto;
+		}
+	}
+	
+	& img {
+		height: var(--imgsize);
+		width: var(--imgsize);
+		margin-left:var(--menuimgmargins);
+		margin-right:var(--menuimgmargins);
+	}
+
+}
+.btn.togglediv { /*:first-child {*/
+	overflow: hidden;
+	width:var(--btnsize);
+	height: var(--btnsize);
+	border:none;
+	background: transparent;
+}
+
+
+
+
+.btn span {
+	margin-top: auto;
+	margin-bottom: auto;
+	display: inline-block;
+}
+
+.btn:not(.togglediv) { /* :first-child) {*/
+	opacity: 0;
+	/* -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; */
+	/* z-index: -2; */
+	/*-webkit-transition: all calc( 0.5 * var(--menuspeed) * 1s) cubic-bezier(.87,-.41,.19,1.44);*/
+	transition: all calc( 0.5 * var(--menuspeed) * 1s) cubic-bezier(.87,-.41,.19,1.44);
+}
+
+
+.menuBtn, .closeBtn {
+	position: absolute;
+	transition: all calc( 0.5 * var(--menuspeed) * 1s) ease;
+}
+
+.closeBtn {
+	/*transform: translateY(50px);*/
+	opacity: 0;
+}
+
