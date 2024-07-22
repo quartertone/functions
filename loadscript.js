@@ -2,7 +2,7 @@
 function loadScript(url, { vnum, id, defer, async, module, before, anchor } = {}) {
   //options = ={id: null, anchor: null, defer: false, async: false};
   let script = document.createElement("script"); // create a script DOM node
-  script.src = url + "?" + vnum; // set its src to the provided URL
+  script.src = url + (vnum ? "?" + vnum : ""); // set its src to the provided URL
   if (id) { // prevent cluttering up <head> with duplicate <script>s
     if (document.getElementById(id)) {
       document.getElementById(id).remove();
