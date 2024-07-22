@@ -20,7 +20,6 @@ function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
 
   styles.btnsize ??= getComputedStyle(anchor).getPropertyValue("--btnsize") ?? getComputedStyle(document.documentElement).getPropertyValue("--btnsize") ?? "3em";
   styles.flingdelay ??= 0.1;
-  styles.direction ??= 1; //1 is down/clockwise -1 is up/counterclockwise
   //anchor.direction = config.direction;
   styles.imgsize ??= styles.btnsize;
   styles.lineheight ??= styles.btnsize;
@@ -34,6 +33,7 @@ function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
   }
 
   config.ellipse ??= 1;
+  config.direction ??= 1; //1 is down/clockwise -1 is up/counterclockwise
 
 
   //default rounded to btnsize
