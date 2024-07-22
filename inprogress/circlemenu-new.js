@@ -7,21 +7,21 @@ by @quartertone
 // APPENDER function only requires data
 
 
-                 .d8888b. 88888888888 .d88888b.  8888888b.  
-                d88P  Y88b    888    d88P" "Y88b 888   Y88b 
-                Y88b.         888    888     888 888    888 
-                 "Y888b.      888    888     888 888   d88P 
-                    "Y88b.    888    888     888 8888888P"  
-                      "888    888    888     888 888        
-                Y88b  d88P    888    Y88b. .d88P 888        
-                 "Y8888P"     888     "Y88888P"  888  
+    .d8888b. 88888888888 .d88888b.  8888888b.  
+   d88P  Y88b    888    d88P" "Y88b 888   Y88b 
+   Y88b.         888    888     888 888    888 
+    "Y888b.      888    888     888 888   d88P 
+       "Y88b.    888    888     888 8888888P"  
+         "888    888    888     888 888        
+   Y88b  d88P    888    Y88b. .d88P 888        
+    "Y8888P"     888     "Y88888P"  888  
 
    
 */
 
 const BUTTONCLASS = "btn";
 
-function floatmenu({styles={}, config={}, menuitems, anchor}={}) {
+function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
   //console.log(anchor,config);
   //	anchor.className = "circlemenuinput";
   var TOGGLEID = anchor.id + "toggle";
@@ -30,33 +30,33 @@ function floatmenu({styles={}, config={}, menuitems, anchor}={}) {
 
 
   styles.btnsize ??= getComputedStyle(anchor).getPropertyValue("--btnsize") ?? getComputedStyle(document.documentElement).getPropertyValue("--btnsize") ?? "3em";
-	styles.flingdelay ??= 0.1;
-	styles.direction ??= 1; //1 is down/clockwise -1 is up/counterclockwise
-//anchor.direction = config.direction;
-	styles.imgsize ??= styles.btnsize;
-	styles.lineheight ??= styles.btnsize;
-	styles.linearbg ??= "#444";
-	styles.gapsize ??= "2px"; // optional,gap between menu items
-	styles.radius ??= "7em";
+  styles.flingdelay ??= 0.1;
+  styles.direction ??= 1; //1 is down/clockwise -1 is up/counterclockwise
+  //anchor.direction = config.direction;
+  styles.imgsize ??= styles.btnsize;
+  styles.lineheight ??= styles.btnsize;
+  styles.linearbg ??= "#444";
+  styles.gapsize ??= "2px"; // optional,gap between menu items
+  styles.radius ??= "7em";
   styles.leftright ??= "left:0;";
-		
-for (let [name,value] of Object.entries(styles)) {
-    anchor.style.setProperty('--'+name, value);
-}
 
-    config.ellipse ??= 1;
+  for (let [name, value] of Object.entries(styles)) {
+    anchor.style.setProperty('--' + name, value);
+  }
+
+  config.ellipse ??= 1;
 
 
- //default rounded to btnsize
+  //default rounded to btnsize
   if (config.rounded == false) anchor.style.setProperty('--borderradius', "0");
 
-	// need to set width so that positioning works correctly
-  anchor.style.width = "var(--btnsize)"; 
+  // need to set width so that positioning works correctly
+  anchor.style.width = "var(--btnsize)";
   anchor.style.height = "var(--btnsize)";
 
 
-	//autocalculate ARC so that each button is equidistant 1/2 btnsize apart
-	config.arc ??= 360 * ((styles.btnsize.replace(/\D+/g, '')) * (1.5 * anchor.numitems - 1)) / (Math.PI * 2 * (styles.radius.replace(/\D+/g, '')));
+  //autocalculate ARC so that each button is equidistant 1/2 btnsize apart
+  config.arc ??= 360 * ((styles.btnsize.replace(/\D+/g, '')) * (1.5 * anchor.numitems - 1)) / (Math.PI * 2 * (styles.radius.replace(/\D+/g, '')));
   if (config.arc > 360) config.arc = 360; //max full circle
 
   var startangle = config.hasOwnProperty("startpoint") ? 180 - config.startpoint : 180 - (180 - config.arc) / 2;
@@ -67,19 +67,16 @@ for (let [name,value] of Object.entries(styles)) {
   var ellipseXaxis = 1;
 
 
-
-
-
-   let menustyle = `
-	
+  let menustyle = `
 	 #${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn .menuBtn {opacity: 0;}
 	
-   #${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn .closeBtn { opacity: 1;}`; //transform: translateY(0);
- //transform: translateY(-50px); 
- 
+   #${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn .closeBtn { opacity: 1;}`;
+  // switched to just opacity instead. Sliding animation is cheesy
+  //transform: translateY(0);
+  //transform: translateY(-50px); 
+
   for (i = 0; i < anchor.numitems; i++) {
-    let nth = i + 1;
-		let inverse = anchor.numitems - i; // so that cascading menu items flow behind item above it // goes with menuitems.reverse() below
+    let inverse = anchor.numitems - i; // so that cascading menu items flow behind item above it // goes with menuitems.reverse() below
     menustyle += `
 		#${anchor.id} .btn:nth-child(${inverse}) {
      top:0em;
@@ -96,7 +93,7 @@ for (let [name,value] of Object.entries(styles)) {
 			opacity:1;
 		}
 			`;
-			
+
     } else { //CIRCULAR MENU
       var thisangle = toradians(startangle - (theta * i));
       if (config.direction == -1) {
@@ -109,8 +106,8 @@ for (let [name,value] of Object.entries(styles)) {
     }
   }
 
-  
-	addCSS(menustyle,anchor.id + "_circlemenu");
+
+  addCSS(menustyle, anchor.id + "_circlemenu");
 
 
 
@@ -131,7 +128,7 @@ for (let [name,value] of Object.entries(styles)) {
   //insert first 2 buttons for toggler button
   var togglediv = document.createElement("div");
   togglediv.classList.add(BUTTONCLASS);
-	togglediv.classList.add("togglediv");
+  togglediv.classList.add("togglediv");
   for (i = 0; i < 2; i++) {
     var btn = menuitems.shift();
     var trigger = document.createElement("div");
@@ -148,8 +145,8 @@ for (let [name,value] of Object.entries(styles)) {
     togglediv.insertBefore(trigger, null);
   }
 
-	for (idx in menuitems.reverse()) {
-		// for (let idx = menuitems.length -1; idx >=0; idx--) {
+  for (idx in menuitems.reverse()) {
+    // for (let idx = menuitems.length -1; idx >=0; idx--) {
     var btn = menuitems[idx];
     if (btn.hidden == true) continue;
     // var trigger = document.createElement(btn.link ? "a" : "div");
@@ -182,31 +179,31 @@ for (let [name,value] of Object.entries(styles)) {
     }
     menulabel.insertBefore(trigger, null);
   }
-	
+
   menulabel.append(togglediv); // add last so that it sits on top of other menu items
-	
+
 
   anchor.insertBefore(menulabel, null);
 
   //anchor.config = JSON.parse(JSON.stringify(config));
-	anchor.styles = styles;
+  anchor.styles = styles;
   anchor.config = config;
 
   if (config.style == "linear") autowidth(anchor);
 
+  if (!config.banner) {
+  let dimbg;
+  chkbox.onchange = function (e) {
+    console.log(this.checked);
+    if (this.checked) {
+      dimbg = makedimbg({ parentbox: anchor, before: chkbox, alsofn: function () { chkbox.checked = false; }, opacity: 0.4 , scroll:config.scroll});
+    } else if (dimbg) {
+      dimbg.click();
+    }
+  };
+}
 
 } //END FLOATMENU
-
-
-
-
-
-////////////////////
-// Convert to Rad //
-////////////////////
-function toradians(degrees) {
-  return degrees * Math.PI / 180;
-};
 
 
 
@@ -238,39 +235,38 @@ function autowidth(anchor) {
   }
 
   anchor.style.setProperty('--menuwidth', (0.5 + Math.max(...widths)) + "em");
-	
+
   //console.log("menufixedwidth", (0.5 + Math.max(...widths)) + "em");
   if (anchor.config.banner) {
-
-    //banner options: number of items to show in banner if too narrow		
-
     //console.log(widths, (widths.reduce((a, b) => a + b, 0) + "em"));
 
     // THIS gives wrong sum because of font size scaling. menu font is 75% of baseline
     // CRAPPY HACK = divide by 75%
-		// navheight could be btnsize
-    let bannerstyle = "\n@media only screen and (min-width:" + ((1 / 0.85) * widths.reduce((a, b) => a + b, 0) + "em") + ") {"
-      + "main { padding-top: calc(var(--btnsize) + " + anchor.styles.lineheight + ") }"
-      + "#" + anchor.id + " label.show-menu {display: flex; position: fixed; left: 0; flex-direction: row; justify-content: flex-end; width: 100%; top: var(--btnsize); }"
-      + "#" + anchor.id + " .btn:first-child { display:none; }"
-      //+ "#" + anchor.id + " .btn:first-child { right:0 !important; }" //CRAPPY HACK
-      + "#" + anchor.id + " .btn:not(:first-child) { position:relative!important; top: 0 !important; opacity: 1 !important; pointer-events: auto; z-index:1000;}" + "}";
-
-
+    // navheight could be btnsize?
+    let bannerstyle = `
+  @media only screen and (min-width:${(1 / 0.85) * widths.reduce((a, b) => a + b, 0)}em) {
+    main { padding-top: calc(var(--btnsize) + ${anchor.styles.lineheight}) }
+    #${anchor.id} label.show-menu {display: flex; position: fixed; left: 0; flex-direction: row; justify-content: flex-end; width: 100%; top: var(--btnsize); }
+    #${anchor.id} .btn:first-child { display:none; }
+    #${anchor.id} .btn:not(:first-child) { position:relative!important; top: 0 !important; opacity: 1 !important; pointer-events: auto; z-index:1000;}
+  }
+`;
+    //+ "#${anchor.id} .btn:first-child { right:0 !important; }" //CRAPPY HACK
     if (anchor.config.banner >= 2) {
-      bannerstyle += "\n@media only screen and (min-width:" + ((1 / 0.85) * bannerwidths.reduce((a, b) => a + b, 0) + "em") + ") and (max-width:" + ((1 / 0.85) * widths.reduce((a, b) => a + b, 0) + "em") + ") {"
-        + "main { padding-top: calc(var(--navheight) + " + anchor.styles.lineheight + ") }"
-        + "#" + anchor.id + " input[type=\"checkbox\"]:not(:checked) ~ label.show-menu {display: flex; position: fixed; left: 0; flex-direction: row; justify-content: flex-end; width: 100%; top: var(--navheight); }"
+      bannerstyle += `
+      @media only screen and (min-width:${(1 / 0.85) * bannerwidths.reduce((a, b) => a + b, 0)}em) and (max-width:${(1 / 0.85) * widths.reduce((a, b) => a + b, 0)}em) {
+        main { padding-top: calc(var(--btnsize) + ${anchor.styles.lineheight}) }
+        #${anchor.id} input[type="checkbox"]:not(:checked) ~ label.show-menu {display: flex; position: fixed; left: 0; flex-direction: row; justify-content: flex-end; width: 100%; top: var(--btnsize); }
+        /* CRAPPY HACK for fixed icon*/
+        #${anchor.id} input[type="checkbox"]:not(:checked) ~ label .btn:first-child { position: fixed; top: 0 !important; right:0 !important; }`;
 
-        //CRAPPY HACK for fixed icon
-        + "#" + anchor.id + " input[type=\"checkbox\"]:not(:checked) ~ label .btn:first-child { position: fixed; top: 0 !important; right:0 !important; }";
       for (i = 1; i <= anchor.config.banner + 1; i++) {
-        bannerstyle += "#" + anchor.id + " input[type=\"checkbox\"]:not(:checked) ~ label .btn:nth-child(" + i + "), ";
+        bannerstyle += `#${anchor.id} input[type="checkbox"]:not(:checked) ~ label .btn:nth-child(${i}), `;
       }
-      //style.innerHTML += "#RANDOMBLAH { position:relative!important; top: 0 !important; opacity: 1 !important; pointer-events: auto; z-index:1000;}";
+      bannerstyle += "#comma_terminator_placeholder { position:relative!important; top: 0 !important; opacity: 1 !important; pointer-events: auto; z-index:1000;} }";
 
     }
-	addcss(bannerstyle,anchor.id + "_maxwidth");
+    addCSS(bannerstyle, anchor.id + "_maxwidth");
   }
 }
 
@@ -280,95 +276,9 @@ function autowidth(anchor) {
 // ------------------------------------------------
 // ------------------------------------------------
 // REQUIRED FUNCTIONS
-
-function addCSS(css, id, anchor) { // append CSS style element to head
-	let styl = document.querySelector(`#${id}`) ?? document.createElement("style");
-  styl.innerHTML = css;
-  styl.id = id;
-  anchor ? anchor.appendChild(styl) : document.head.appendChild(styl);
-  return styl;
-}
-
-
-function makedimbg({ source, parentbox, before, onclickfn, fadetime = "0.35s", alsofn } = {}) {
-  let dimbox;
-
-  dimbox = document.createElement("div");
-  dimbox.style = "position:fixed;inset:0;background:#444b;opacity:0;";
-  dimbox.style.transition = `opacity ${fadetime} ease`;
-
-  if (parentbox != null) {
-    if (before) {
-      parentbox.insertBefore(dimbox,before);
-    } else {
-    parentbox.appendChild(dimbox);
-    }
-  } else {
-    document.body.appendChild(dimbox);
-  }
-
-  // slight delay to let above styles set up first
-  setTimeout(function () {
-    dimbox.style.opacity = "1";
-  }, 5);
-
-
-  // if onclick function is set, use it instead.
-  // NOTE: custom function must also manage the dimbox (eg let dimbg = makedimbg({onclickfn:functionname}); ----> functionname() {dimbg.remove()};
-  onclickfn ??= function (e) {
-    e.preventDefault();
-
-    // if alsofn is set, do that ALSO
-    if (alsofn instanceof Function) alsofn(); 
-
-    // fadeout transition
-    // note: without fadeout, it's just dimbox.remove() and source.remove();
-    dimbox.style.opacity = "0";
-    if (source) {
-      source.style.transition = `opacity ${fadetime} ease`;
-      source.style.opacity = "0";
-    }
-    setTimeout(function () {
-      dimbox.remove();
-      if (source) source.remove();
-    }, parseFloat(fadetime.replace(/s$/, "")) * 1100);
-
-    
-  };
-
-  dimbox.onclick = dimbox.ontouch = function (e) {
-    onclickfn(e);
-    window.removeEventListener("wheel", dontscroll);
-    window.removeEventListener("keydown", doescape);
-  };
-
-  window.addEventListener("keydown", doescape);
-  window.addEventListener("wheel", dontscroll, { passive: false });
-
-
-  function dontscroll(e) {
-    e.preventDefault();
-    console.log("no scrolling");
-  }
-
-  function doescape(e) {
-    if (e.key == "Escape") {
-      e.preventDefault();
-      window.removeEventListener("wheel", dontscroll);
-      window.removeEventListener("keydown", doescape);
-      onclickfn(e);
-    } else if (e.code.match(/^(Arrow|Page|Space)/)) {
-      // prevent scrolling the main webpage
-      console.log(e.code, "No scrolling while dimbg");
-      e.preventDefault();
-    }
-  }
-
-
-  return dimbox;
-}
-
-
+// addcss
+// makedimbg
+// toradians
 // ------------------------------------------------
 // ------------------------------------------------
 // ------------------------------------------------
@@ -376,74 +286,75 @@ function makedimbg({ source, parentbox, before, onclickfn, fadetime = "0.35s", a
 
 //// USAGE EXAMPLE:
 
-let styles =  {
-		flingdelay: 0.2, // animation delay in seconds (for staggered opening)
-		menuspeed: 1, // animation speed /// change name to menuspeed
-		btnsize: "3em", // size of buttons
-		//menuwidth: "16em", // width of menu items, default is auto-calculated
-		imgsize: "3em", // defaults to btnsize, this is the size of the image icons within the linear menu items
-		lineheight: "3em", // defaults to btnsize, line height of the linear menu items
-		linearbg: "#449", // bg color of linear menu items
-		gapsize: "2px", // gap between linear menu items
-		radius: "7em", // radius of the circle along which icons are placed
-		leftright: "right:0em;"
-	};
-	
-	
-var configuration = {
-	  rounded: false, // t/f rounded borders
-  direction: 1, // default 1; 1 = clockwise/down, -1 = counterclockwise/up
-      // this is experimental and needs some work
-	//banner: 3, //working on partial banner display, where X number of items display in banner.
-  style: "linear", // rounded or linear
-  // arc: {auto calculated}, // angle in degrees, default is calculated according to btnsize and radius
-  // startpoint: {auto calculated} // angle in degrees, default is calculated according to arc centered on the zenith
-          // zero is set to the left side of the X axis just because that's how I like it.
-  ellipse: 1, //change this to make the arc narrow(<1) or tall(>1)
-  alignbottom: true, // t/f whether to bring the arc down so the two ends line up with menu opener					
-};
+// let styles = {
+//   flingdelay: 0.1, // animation delay in seconds (for staggered opening)
+//   menuspeed: .6, // animation speed /// change name to menuspeed
+//   btnsize: "3em", // size of buttons
+//   //menuwidth: "16em", // width of menu items, default is auto-calculated
+//   imgsize: "3em", // defaults to btnsize, this is the size of the image icons within the linear menu items
+//   lineheight: "3em", // defaults to btnsize, line height of the linear menu items
+//   linearbg: "#449", // bg color of linear menu items
+//   gapsize: "2px", // gap between linear menu items
+//   radius: "7em", // radius of the circle along which icons are placed
+//   leftright: "right:0em;"
+// };
 
- // DATA is required
-let data=  [ //first two items comprise the menu opener (open / close)
-    {
-      "id": "id1",
-      "src": "https://upload.wikimedia.org/wikipedia/commons/b/be/Earth.svg",
-      "alt": "MENU"
-    }, {
-      "id": "id2",
-      "src": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Emblem-earth.svg",
-      "alt": "CLOSE"
-    }, {
-      "id": "id3",
-      "src": "https://upload.wikimedia.org/wikipedia/commons/5/5e/%C3%86toms_-_Earth.svg",
-      "alt": "Earth1",
-      "link": ""
-    }, {
-      "id": "id4",
-      "src": "https://upload.wikimedia.org/wikipedia/commons/4/42/Molniya_earth_view_E.svg",
-      "alt": "second world",
-      "link": ""
-    }, {
-      "id": "id5",
-      "src": "https://upload.wikimedia.org/wikipedia/commons/4/42/Molniya_earth_view_E.svg",
-      "alt": "Other world",
-      "link": ""
-    }, {
-      "id": "id6",
-      "src": "https://upload.wikimedia.org/wikipedia/commons/4/42/Molniya_earth_view_E.svg",
-      "alt": "WORDLE",
-      "link": ""
-    }, {
-      "id": "id7",
-      "src": "https://upload.wikimedia.org/wikipedia/commons/4/42/Molniya_earth_view_E.svg",
-      "alt": "Seventh Stage",
-      "link": ""
-    },
-  ];
-	
-	
-// styles:styles,config:configuration,
-floatmenu({styles:styles,config:configuration,menuitems:data,anchor:document.querySelector("#btn")});
+
+// var configuration = {
+//   scroll: false, // allow/disable scrolling while menu is open (based on makedimbg)
+//   rounded: false, // t/f rounded borders
+//   direction: 1, // default 1; 1 = clockwise/down, -1 = counterclockwise/up
+//   // this is experimental and needs some work
+//   // banner: 3, //banner option: number of items to show horizontally if display is too narrow		
+//   style: "linear", // rounded or linear
+//   // arc: {auto calculated}, // angle in degrees, default is calculated according to btnsize and radius
+//   // startpoint: {auto calculated} // angle in degrees, default is calculated according to arc centered on the zenith
+//   // zero is set to the left side of the X axis just because that's how I like it.
+//   ellipse: 1, //change this to make the arc narrow(<1) or tall(>1)
+//   alignbottom: true, // t/f whether to bring the arc down so the two ends line up with menu opener					
+// };
+
+// // DATA is required
+// let data = [ //first two items comprise the menu opener (open / close)
+//   {
+//     "id": "id1",
+//     "src": "menuburger.svg",
+//     "alt": "MENU"
+//   }, {
+//     "id": "id2",
+//     "src": "menuburger.svg",
+//     "alt": "CLOSE"
+//   }, {
+//     "id": "id3",
+//     "src": "https://upload.wikimedia.org/wikipedia/commons/5/5e/%C3%86toms_-_Earth.svg",
+//     "alt": "Earth1",
+//     "link": ""
+//   }, {
+//     "id": "id4",
+//     "src": "https://upload.wikimedia.org/wikipedia/commons/4/42/Molniya_earth_view_E.svg",
+//     "alt": "second world",
+//     "link": ""
+//   }, {
+//     "id": "id5",
+//     "src": "https://upload.wikimedia.org/wikipedia/commons/4/42/Molniya_earth_view_E.svg",
+//     "alt": "Other world",
+//     "link": ""
+//   }, {
+//     "id": "id6",
+//     "src": "https://upload.wikimedia.org/wikipedia/commons/4/42/Molniya_earth_view_E.svg",
+//     "alt": "WORDLE",
+//     "link": ""
+//   }, {
+//     "id": "id7",
+//     "src": "https://upload.wikimedia.org/wikipedia/commons/4/42/Molniya_earth_view_E.svg",
+//     "alt": "Seventh Stage",
+//     "link": ""
+//   },
+// ];
+
+
+// // styles:styles,config:configuration,
+// floatmenu({ styles: styles, config: configuration, menuitems: data, anchor: document.querySelector("#btn") });
 
 
 
@@ -455,75 +366,75 @@ floatmenu({styles:styles,config:configuration,menuitems:data,anchor:document.que
 // ////////////////////
 
 // function appendtolinear(config, anchor) {
-  // var TOGGLEID = anchor.id + "toggle";
-  // var additems = config.data.length;
-  // var newitemcount = anchor.numitems + additems;
+// var TOGGLEID = anchor.id + "toggle";
+// var additems = config.data.length;
+// var newitemcount = anchor.numitems + additems;
 
 
 // // TODO : CHANGE TO addCSS
 
-  // var style = document.createElement('style');
+// var style = document.createElement('style');
 
-  // for (i = anchor.numitems; i <= (additems + anchor.numitems); i++) {
-    // var nth = i + 1;
-    // style.innerHTML +=`
-	// #${anchor.id} .btn:nth-child(${nth}) {
-    // top:0;
-		// ${anchor.styles.leftright};
-    // transition-delay: ${i * anchor.styles.flingdelay}s;
-	// }
+// for (i = anchor.numitems; i <= (additems + anchor.numitems); i++) {
+// var nth = i + 1;
+// style.innerHTML +=`
+// #${anchor.id} .btn:nth-child(${nth}) {
+// top:0;
+// ${anchor.styles.leftright};
+// transition-delay: ${i * anchor.styles.flingdelay}s;
+// }
 
-	// #${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn:nth-child(${nth}) {
-	// ${anchor.styles.leftright};
-	// top: calc( (${anchor.config.direction} * ( var(--lineheight) + (${anchor.styles.lineheight} + ${anchor.styles.gapsize}) * ${i})));
-  // opacity:1;
-	// }
+// #${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn:nth-child(${nth}) {
+// ${anchor.styles.leftright};
+// top: calc( (${anchor.config.direction} * ( var(--lineheight) + (${anchor.styles.lineheight} + ${anchor.styles.gapsize}) * ${i})));
+// opacity:1;
+// }
 // `;
 
 // // if negative direction, use lineheight???
 
-  // }
+// }
 
- // document.head.appendChild(style);
+// document.head.appendChild(style);
 
 
 
-  // menuitems = config.data;
+// menuitems = config.data;
 
-  // var menulabel = document.getElementById(anchor.id + "_menulabel");
+// var menulabel = document.getElementById(anchor.id + "_menulabel");
 
-  // for (idx in menuitems) {
-    // let btn = menuitems[idx];
-    // let trigger = document.createElement("a");
-    // trigger.classList.add(BUTTONCLASS);
-    // trigger.id = btn.id;
-    // trigger.title = btn.alt;
-    // //trigger._target="_blank"; trigger.rel="noopener"; //optional
+// for (idx in menuitems) {
+// let btn = menuitems[idx];
+// let trigger = document.createElement("a");
+// trigger.classList.add(BUTTONCLASS);
+// trigger.id = btn.id;
+// trigger.title = btn.alt;
+// //trigger._target="_blank"; trigger.rel="noopener"; //optional
 
-    // // if (btn.link != "") trigger.href = btn.link;
-    // if (btn.link != "") {
-      // let btnlink = btn.link;
-      // trigger.onclick = function (e) {
-        // window.location.assign(btnlink);
-      // };
-    // }
+// // if (btn.link != "") trigger.href = btn.link;
+// if (btn.link != "") {
+// let btnlink = btn.link;
+// trigger.onclick = function (e) {
+// window.location.assign(btnlink);
+// };
+// }
 
-    // var img = document.createElement("img");
-    // //img.id = "img_" + btn.id;
-    // img.alt = btn.alt;
-    // img.src = btn.src;
-    // trigger.insertBefore(img, null);
-    // var span = document.createElement("span");
-    // span.innerHTML = btn.alt;
-    // trigger.insertBefore(span, null);
-    // menulabel.insertBefore(trigger, null);
-  // }
+// var img = document.createElement("img");
+// //img.id = "img_" + btn.id;
+// img.alt = btn.alt;
+// img.src = btn.src;
+// trigger.insertBefore(img, null);
+// var span = document.createElement("span");
+// span.innerHTML = btn.alt;
+// trigger.insertBefore(span, null);
+// menulabel.insertBefore(trigger, null);
+// }
 
-  // //	anchor.insertBefore(menulabel, null); // no need, it's already there.
-  // anchor.numitems += config.data.length;
+// //	anchor.insertBefore(menulabel, null); // no need, it's already there.
+// anchor.numitems += config.data.length;
 
-  // // this is linear menu, so don't need (if)
-  // autowidth(anchor);
+// // this is linear menu, so don't need (if)
+// autowidth(anchor);
 
 // } //END APPEND
 
