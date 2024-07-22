@@ -6,22 +6,11 @@ by @quartertone
 
 // APPENDER function only requires data
 
-
-    .d8888b. 88888888888 .d88888b.  8888888b.  
-   d88P  Y88b    888    d88P" "Y88b 888   Y88b 
-   Y88b.         888    888     888 888    888 
-    "Y888b.      888    888     888 888   d88P 
-       "Y88b.    888    888     888 8888888P"  
-         "888    888    888     888 888        
-   Y88b  d88P    888    Y88b. .d88P 888        
-    "Y8888P"     888     "Y88888P"  888  
-
-   
 */
 
-const BUTTONCLASS = "btn";
-
+// - configurable collapsing menu
 function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
+  const BUTTONCLASS = "btn";
   //console.log(anchor,config);
   //	anchor.className = "circlemenuinput";
   var TOGGLEID = anchor.id + "toggle";
@@ -192,58 +181,54 @@ function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
   if (config.style == "linear") autowidth(anchor);
 
   if (!config.banner) {
-  let dimbg;
-  chkbox.onchange = function (e) {
-    console.log(this.checked);
-    if (this.checked) {
-      dimbg = makedimbg({ parentbox: anchor, before: chkbox, alsofn: function () { chkbox.checked = false; }, opacity: 0.4 , scroll:config.scroll});
-    } else if (dimbg) {
-      dimbg.click();
-    }
-  };
-}
-
-} //END FLOATMENU
-
-
-
-
-////////////////////////////////////
-// ADJUST WIDTH FOR LONGEST LABEL //
-////////////////////////////////////
-
-function autowidth(anchor) {
-  //console.log("--AUTOWIDTH--",anchor.config);
-  if (anchor.styles.menuwidth) return;
-  anchor.style.setProperty('--menuwidth', "auto");
-  let btns = anchor.getElementsByClassName("btn");
-
-  let imgem = getComputedStyle(anchor).getPropertyValue('--imgsize').match(/([\.\d]*)/)[0];
-  let imgpx = (btns[1].getElementsByTagName("img")[0].getBoundingClientRect()).width;
-
-  let converter = imgem / imgpx; // convert to EMs
-
-
-  let widths = [];
-  let bannerwidths = [];
-  for (i = 1; i < btns.length; i++) {
-    //start at i=1 == skip first child
-    widths.push(btns[i].getBoundingClientRect().width * converter);
-    if (i <= anchor.config.banner) bannerwidths.push(btns[i].getBoundingClientRect().width * converter);
-    //console.log(btns[i].id, btns[i].getBoundingClientRect().width * converter);
-
+    let dimbg;
+    chkbox.onchange = function (e) {
+      console.log(this.checked);
+      if (this.checked) {
+        dimbg = makedimbg({ parentbox: anchor, before: chkbox, alsofn: function () { chkbox.checked = false; }, opacity: 0.4, scroll: config.scroll });
+      } else if (dimbg) {
+        dimbg.click();
+      }
+    };
   }
 
-  anchor.style.setProperty('--menuwidth', (0.5 + Math.max(...widths)) + "em");
 
-  //console.log("menufixedwidth", (0.5 + Math.max(...widths)) + "em");
-  if (anchor.config.banner) {
-    //console.log(widths, (widths.reduce((a, b) => a + b, 0) + "em"));
+  ////////////////////////////////////
+  // ADJUST WIDTH FOR LONGEST LABEL //
+  ////////////////////////////////////
 
-    // THIS gives wrong sum because of font size scaling. menu font is 75% of baseline
-    // CRAPPY HACK = divide by 75%
-    // navheight could be btnsize?
-    let bannerstyle = `
+  function autowidth(anchor) {
+    //console.log("--AUTOWIDTH--",anchor.config);
+    if (anchor.styles.menuwidth) return;
+    anchor.style.setProperty('--menuwidth', "auto");
+    let btns = anchor.getElementsByClassName("btn");
+
+    let imgem = getComputedStyle(anchor).getPropertyValue('--imgsize').match(/([\.\d]*)/)[0];
+    let imgpx = (btns[1].getElementsByTagName("img")[0].getBoundingClientRect()).width;
+
+    let converter = imgem / imgpx; // convert to EMs
+
+
+    let widths = [];
+    let bannerwidths = [];
+    for (i = 1; i < btns.length; i++) {
+      //start at i=1 == skip first child
+      widths.push(btns[i].getBoundingClientRect().width * converter);
+      if (i <= anchor.config.banner) bannerwidths.push(btns[i].getBoundingClientRect().width * converter);
+      //console.log(btns[i].id, btns[i].getBoundingClientRect().width * converter);
+
+    }
+
+    anchor.style.setProperty('--menuwidth', (0.5 + Math.max(...widths)) + "em");
+
+    //console.log("menufixedwidth", (0.5 + Math.max(...widths)) + "em");
+    if (anchor.config.banner) {
+      //console.log(widths, (widths.reduce((a, b) => a + b, 0) + "em"));
+
+      // THIS gives wrong sum because of font size scaling. menu font is 75% of baseline
+      // CRAPPY HACK = divide by 75%
+      // navheight could be btnsize?
+      let bannerstyle = `
   @media only screen and (min-width:${(1 / 0.85) * widths.reduce((a, b) => a + b, 0)}em) {
     main { padding-top: calc(var(--btnsize) + ${anchor.styles.lineheight}) }
     #${anchor.id} label.show-menu {display: flex; position: fixed; left: 0; flex-direction: row; justify-content: flex-end; width: 100%; top: var(--btnsize); }
@@ -251,24 +236,26 @@ function autowidth(anchor) {
     #${anchor.id} .btn:not(:first-child) { position:relative!important; top: 0 !important; opacity: 1 !important; pointer-events: auto; z-index:1000;}
   }
 `;
-    //+ "#${anchor.id} .btn:first-child { right:0 !important; }" //CRAPPY HACK
-    if (anchor.config.banner >= 2) {
-      bannerstyle += `
+      //+ "#${anchor.id} .btn:first-child { right:0 !important; }" //CRAPPY HACK
+      if (anchor.config.banner >= 2) {
+        bannerstyle += `
       @media only screen and (min-width:${(1 / 0.85) * bannerwidths.reduce((a, b) => a + b, 0)}em) and (max-width:${(1 / 0.85) * widths.reduce((a, b) => a + b, 0)}em) {
         main { padding-top: calc(var(--btnsize) + ${anchor.styles.lineheight}) }
         #${anchor.id} input[type="checkbox"]:not(:checked) ~ label.show-menu {display: flex; position: fixed; left: 0; flex-direction: row; justify-content: flex-end; width: 100%; top: var(--btnsize); }
         /* CRAPPY HACK for fixed icon*/
         #${anchor.id} input[type="checkbox"]:not(:checked) ~ label .btn:first-child { position: fixed; top: 0 !important; right:0 !important; }`;
 
-      for (i = 1; i <= anchor.config.banner + 1; i++) {
-        bannerstyle += `#${anchor.id} input[type="checkbox"]:not(:checked) ~ label .btn:nth-child(${i}), `;
-      }
-      bannerstyle += "#comma_terminator_placeholder { position:relative!important; top: 0 !important; opacity: 1 !important; pointer-events: auto; z-index:1000;} }";
+        for (i = 1; i <= anchor.config.banner + 1; i++) {
+          bannerstyle += `#${anchor.id} input[type="checkbox"]:not(:checked) ~ label .btn:nth-child(${i}), `;
+        }
+        bannerstyle += "#comma_terminator_placeholder { position:relative!important; top: 0 !important; opacity: 1 !important; pointer-events: auto; z-index:1000;} }";
 
+      }
+      addCSS(bannerstyle, anchor.id + "_maxwidth");
     }
-    addCSS(bannerstyle, anchor.id + "_maxwidth");
   }
-}
+
+} //END FLOATMENU
 
 
 
