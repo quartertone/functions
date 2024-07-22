@@ -24,10 +24,10 @@ $jsfiles = array_merge(
   glob("*.js"),
   glob("inprogress/*.js")
 );
-$cssfiles = array_merge(
-  glob("*.css"),
-  glob("inprogress/*.css")
-);
+// $cssfiles = array_merge(
+//   glob("*.css"),
+//   glob("inprogress/*.css")
+// );
 
 
 foreach ($jsfiles as $file) {
