@@ -7,8 +7,13 @@
   <title>Circle menu test</title>
   <meta name="darkreader-lock">
 	
+  <script src="../addcss.js"></script>
+  <script src="../makedimbg.js"></script>
+  <script src="../toradians.js"></script>
+  
   <link rel="stylesheet" href="circlemenu-new.css" />
-  <script defer src="circlemenu-new.js"></script>
+  <script src="circlemenu-new.js"></script>
+
 	<style>
 body {
 background: black;
@@ -33,12 +38,16 @@ left: 50%;
 	Y88b  d88P    888    Y88b. .d88P 888        
 	 "Y8888P"     888     "Y88888P"  888  
 </pre>
+<button id="xbtn">BUTTON</button>
 <div class="wide">
 <div id="btn"></div>
 
 </div>
 <script>
 
+document.querySelector("#xbtn").onclick = () => {
+  console.log("CLICKED");
+}
 let xscripts = [];
 let xstyles = [];
 
@@ -49,6 +58,80 @@ for (let s of xscripts) {
 for (let s of xstyles) {
 	loadCSS(s,s.match(/^(.*)\./)[1]);
 }
+
+
+
+let styles = {
+  flingdelay: 0.1, // animation delay in seconds (for staggered opening)
+  menuspeed: .6, // animation speed /// change name to menuspeed
+  btnsize: "3em", // size of buttons
+  //menuwidth: "16em", // width of menu items, default is auto-calculated
+  imgsize: "3em", // defaults to btnsize, this is the size of the image icons within the linear menu items
+  lineheight: "3em", // defaults to btnsize, line height of the linear menu items
+  linearbg: "#449", // bg color of linear menu items
+  gapsize: "2px", // gap between linear menu items
+  radius: "7em", // radius of the circle along which icons are placed
+  leftright: "right:0em;"
+};
+
+
+var configuration = {
+  rounded: false, // t/f rounded borders
+  direction: 1, // default 1; 1 = clockwise/down, -1 = counterclockwise/up
+  // this is experimental and needs some work
+  // banner: 3, //banner option: number of items to show horizontally if display is too narrow		
+  style: "linear", // rounded or linear
+  // arc: {auto calculated}, // angle in degrees, default is calculated according to btnsize and radius
+  // startpoint: {auto calculated} // angle in degrees, default is calculated according to arc centered on the zenith
+  // zero is set to the left side of the X axis just because that's how I like it.
+  ellipse: 1, //change this to make the arc narrow(<1) or tall(>1)
+  alignbottom: true, // t/f whether to bring the arc down so the two ends line up with menu opener					
+};
+
+// DATA is required
+let data = [ //first two items comprise the menu opener (open / close)
+  {
+    "id": "id1",
+    "src": "menuburger.svg",
+    "alt": "MENU"
+  }, {
+    "id": "id2",
+    "src": "menuburger.svg",
+    "alt": "CLOSE"
+  }, {
+    "id": "id3",
+    "src": "https://upload.wikimedia.org/wikipedia/commons/5/5e/%C3%86toms_-_Earth.svg",
+    "alt": "Earth1",
+    "link": ""
+  }, {
+    "id": "id4",
+    "src": "https://upload.wikimedia.org/wikipedia/commons/4/42/Molniya_earth_view_E.svg",
+    "alt": "second world",
+    "link": ""
+  }, {
+    "id": "id5",
+    "src": "https://upload.wikimedia.org/wikipedia/commons/4/42/Molniya_earth_view_E.svg",
+    "alt": "Other world",
+    "link": ""
+  }, {
+    "id": "id6",
+    "src": "https://upload.wikimedia.org/wikipedia/commons/4/42/Molniya_earth_view_E.svg",
+    "alt": "WORDLE",
+    "link": ""
+  }, {
+    "id": "id7",
+    "src": "https://upload.wikimedia.org/wikipedia/commons/4/42/Molniya_earth_view_E.svg",
+    "alt": "Seventh Stage",
+    "link": ""
+  },
+];
+
+
+// styles:styles,config:configuration,
+floatmenu({ styles: styles, config: configuration, menuitems: data, anchor: document.querySelector("#btn") });
+
+
+
 </script>
 
 
