@@ -21,12 +21,15 @@ function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
   styles.btnsize ??= getComputedStyle(anchor).getPropertyValue("--btnsize") ?? getComputedStyle(document.documentElement).getPropertyValue("--btnsize") ?? "3em";
   styles.flingdelay ??= 0.1;
   //anchor.direction = config.direction;
+  styles.menuspeed ??= 0.5;
   styles.imgsize ??= styles.btnsize;
   styles.lineheight ??= styles.btnsize;
-  styles.linearbg ??= "#444";
-  styles.gapsize ??= "2px"; // optional,gap between menu items
+  styles.linearbg ??= "#444e";
+  styles.gapsize ??= "0px"; // optional,gap between menu items // "px" or other unit must be given
+  styles.menufg ??= "#fff";
   styles.radius ??= "7em";
   styles.leftright ??= "left:0;";
+  styles.hovercolor ??= "#589";
 
   for (let [name, value] of Object.entries(styles)) {
     anchor.style.setProperty('--' + name, value);
@@ -65,14 +68,14 @@ function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
   //transform: translateY(-50px); 
 
   for (i = 0; i < anchor.numitems; i++) {
-    let inverse = anchor.numitems - i; // so that cascading menu items flow behind item above it // goes with menuitems.reverse() below
+    let nth = i + 1;
     menustyle += `
-		#${anchor.id} .btn:nth-child(${inverse}) {
+		#${anchor.id} .btn:nth-child(${nth}) {
      top:0em;
 		 ${config.style == "rounded" ? "left:0;" : styles.leftright};
 			transition-delay: ${i * styles.flingdelay}s;}
 			
-		#${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn:nth-child(${inverse}) {
+		#${anchor.id}.circlemenu input#${TOGGLEID}:checked ~ .show-menu .btn:nth-child(${nth}) {
 		`;
 
     if (config.style == "linear") {
@@ -134,7 +137,7 @@ function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
     togglediv.insertBefore(trigger, null);
   }
 
-  for (idx in menuitems.reverse()) {
+  for (idx in menuitems) {
     // for (let idx = menuitems.length -1; idx >=0; idx--) {
     var btn = menuitems[idx];
     if (btn.hidden == true) continue;
@@ -143,11 +146,11 @@ function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
     trigger.classList.add(BUTTONCLASS);
     trigger.id = btn.id;
     trigger.title = btn.alt;
+    // this is so that cascading animation shows later items behind the previous menu item
+    trigger.style.zIndex = menuitems.length - idx;
     //trigger._target="_blank"; trigger.rel="noopener"; //optional
 
-    // if (btn.link != "") trigger.href = btn.link;
     if (btn.link != "") {
-      // let btnlink = btn.link;
       trigger.href = btn.link;
       trigger.onclick = function (e) {
         // ** toggle menu button so menu closes
@@ -185,7 +188,7 @@ function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
     chkbox.onchange = function (e) {
       console.log(this.checked);
       if (this.checked) {
-        dimbg = makedimbg({ parentbox: anchor, before: chkbox, alsofn: function () { chkbox.checked = false; }, opacity: 0.4, scroll: config.scroll });
+        dimbg = makedimbg({ parentbox: anchor, before: chkbox, alsofn: function () { chkbox.checked = false; }, opacity: 0.3, scroll: config.scroll });
       } else if (dimbg) {
         dimbg.click();
       }
@@ -211,9 +214,12 @@ function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
 
     let widths = [];
     let bannerwidths = [];
-    for (i = 1; i < btns.length; i++) {
-      //start at i=1 == skip first child
+    console.log(btns);
+    for (i = 0; i < btns.length; i++) {
+      // last item (first item, but reversed) is toggler button
+      // this will be smaller than the other items so doesn't matter that we take it into account or not
       widths.push(btns[i].getBoundingClientRect().width * converter);
+      // console.log(btns[i], widths[i]);
       if (i <= anchor.config.banner) bannerwidths.push(btns[i].getBoundingClientRect().width * converter);
       //console.log(btns[i].id, btns[i].getBoundingClientRect().width * converter);
 
@@ -280,6 +286,7 @@ function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
 //   //menuwidth: "16em", // width of menu items, default is auto-calculated
 //   imgsize: "3em", // defaults to btnsize, this is the size of the image icons within the linear menu items
 //   lineheight: "3em", // defaults to btnsize, line height of the linear menu items
+//   menufg: #fff,
 //   linearbg: "#449", // bg color of linear menu items
 //   gapsize: "2px", // gap between linear menu items
 //   radius: "7em", // radius of the circle along which icons are placed
@@ -339,6 +346,8 @@ function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
 //   },
 // ];
 
+
+// anchor is required, and must have an ID
 
 // // styles:styles,config:configuration,
 // floatmenu({ styles: styles, config: configuration, menuitems: data, anchor: document.querySelector("#btn") });
