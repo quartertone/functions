@@ -214,7 +214,6 @@ function floatmenu({ styles = {}, config = {}, menuitems, anchor } = {}) {
 
     let widths = [];
     let bannerwidths = [];
-    console.log(btns);
     for (i = 0; i < btns.length; i++) {
       // last item (first item, but reversed) is toggler button
       // this will be smaller than the other items so doesn't matter that we take it into account or not

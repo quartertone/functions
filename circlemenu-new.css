@@ -12,7 +12,7 @@
 /*	z-index: 100;* /
 } */
 
-@layer circlemenu {
+@layer mycirclemenu {
   .circlemenu {
     /* --menuspeed: 0.5; */
     --btnsize: 3em;
