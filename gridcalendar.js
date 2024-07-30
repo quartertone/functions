@@ -1,4 +1,10 @@
-
+// REQUIRED ITEMS:
+// gridcal.css
+// makedimbg.js
+// promiseprompt.css
+// promiseprompt.js
+// showmonth.css
+// showmonth.js
 // - custom element date picker (uses showmonth.js)
 // - Resulting date is formatted Y-MM-DD (eg - 2019-05-28)
 // - &lt;grid-cal title="Calendar Title"&gt;&lt;/grid-cal&gt;
@@ -121,7 +127,7 @@ customElements.define("grid-cal", class GridCalendar extends HTMLElement {
       calendarbox.style.opacity = "0";
 
       //Create dimmer BG
-      let caldim = makedimbg({ source: calendarbox }); // SET BG LISTENER
+      let caldim = makedimbg({ source: calendarbox ,opacity:0.2}); // SET BG LISTENER
 
       document.body.appendChild(calendarbox);
 

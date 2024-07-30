@@ -1,7 +1,7 @@
 
 // - interactive dialog that resolves to a promise. Requires makedimbg
 // - necessary styles in promiseprompt.css 
-async function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext = "Ok", canceltext = "Cancel", id = "promiseprompt", classes, confirm = false, html = false, okfn = async function () { return true; } } = {}) {
+async function promiseprompt(promptext, { placeholder = "", defaulttext = "", oktext = "Ok", canceltext = "Cancel", id = "promiseprompt", classes, bgopacity: opacity = 0.6, confirm = false, html = false, okfn = async function () { return true; } } = {}) {
   // Note: deconstructed object can be passed as a regular object
   return new Promise((resolve, reject) => {
 
@@ -11,10 +11,9 @@ async function promiseprompt(promptext, { placeholder = "", defaulttext = "", ok
     promptbox.className = "promiseprompt " + classes;
 
     let dimbg = makedimbg({
-      source: promptbox,
+      source: promptbox, opacity: opacity,
       alsofn: () => {
         resolve(false);
-        console.log("ALSODING");
         document.removeEventListener("keydown", keylistener);
 
       }
