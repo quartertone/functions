@@ -77,7 +77,7 @@ customElements.define("clock-face", class ClockFace extends HTMLElement {
       // let corcle = document.querySelector(".corcle");
 
       let clockdisplayer = document.createElement("div");
-      clockdisplayer.className = "corcledisplayer";
+      clockdisplayer.className = "clockdisplayer";
 
       let corcle = document.createElement("a");
       corcle.className = "corcle"; // main clockface container

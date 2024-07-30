@@ -14,7 +14,7 @@ clock-face, .clock-face, [is="clock-face"] {
   }
 }
 
-.corcledisplayer {
+.clockdisplayer {
   --cl-bg: #444;
   --cl-border: #aaa;
   --cl-fg: #fff;
