@@ -1,0 +1,47 @@
+grid-cal {
+  cursor: pointer;
+}
+
+.floatingcalbox {
+  background: var(--cal-bg);
+  position: fixed !important;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%);
+  width: auto;
+  border: 0.01em solid var(--cal-border);
+  user-select: none;
+
+  .floatingmonth {
+    width: 100%;
+    border-collapse: collapse;
+    display: grid;
+    grid-template-areas: "gridmonth gridmonth gridmonth gridmonth";
+
+    div {
+      border: 0.01em solid rgba(0, 0, 0, 0.8);
+      text-align: center;
+      position: relative;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .gridmonth {
+      background: var(--cal-btnbg);
+      border: 0.001em solid var(--cal-bg);
+      color: var(--cal-btnfg);
+      height: 2.5em;
+      width: 2.5em;
+      line-height: 2.5em;
+      cursor: pointer;
+      font-weight: normal;
+      font-size: 125%;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .calday.calactive,
+  .gridmonth.calactive {
+    background: var(--cal-btnactive);
+  }
+}
