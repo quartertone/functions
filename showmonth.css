@@ -202,16 +202,18 @@
   }
 }
 
-/* For smaller screens, or mobile touch device */
-@media only screen and (max-width: 500px),
-  screen and (max-width: 500px) and (pointer: coarse) {
-  body {
-    font-size: 3.5vw;
-  }
-}
 
 @media only screen and (min-width: 992px) {
   .calholder {
     flex-direction: row;
   }
 }
+
+
+/* For smaller screens, or mobile touch device */
+/* @media only screen and (max-width: 500px),
+  screen and (max-width: 500px) and (pointer: coarse) {
+  body {
+    font-size: 3.5vw;
+  }
+} */
