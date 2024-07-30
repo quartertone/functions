@@ -200,7 +200,7 @@ function showmonth({ refdate, precal = 0, postcal = 0, anchor, classes = "", loc
     monthbox.style.opacity = "0";
 
 
-    let monthdim = makedimbg({ source: monthbox, parentbox: anchor }); // SET BG LISTENER
+    let monthdim = makedimbg({ source: monthbox, parentbox: anchor ,opacity:0.6}); // SET BG LISTENER
 
     makemonthgrid();
 
