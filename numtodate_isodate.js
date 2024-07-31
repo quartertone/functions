@@ -28,7 +28,8 @@ function datecalc(date, { years, months, days } = {}) {
 
   // adjust values
   if (years) y = parseInt(y) + years;
-  if (months) m = parseInt(m) + months -1;
+  m = parseInt(m) -1;
+  if (months) m += months;
   if (days) d = parseInt(d) + days;
 
   // create new date object (in case of month/year overflow
