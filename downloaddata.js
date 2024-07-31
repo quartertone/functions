@@ -1,6 +1,13 @@
 // - download given data as a file
+/**
+ * 
+ * @param {*} data - data to download
+ * @param {string} name - filename (Date number automatically gets inserted)
+ * @param {string} ext - extension
+ * @param {string} promptText - Text for confirmation dialog
+ */
 function downloaddata(data, name, ext, promptText) {
-  let exportfile = name + datefromUTC(new Date()) + ext;
+  let exportfile = name + (new Date()).valueOf() + ext;
   exportfile = prompt(promptText, exportfile);
   if (exportfile != null) {
     var element = document.createElement('a');
