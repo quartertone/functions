@@ -37,15 +37,17 @@
     }
   </style>
 
-  <link rel="stylesheet" href="showmonth.css" />
-  <link rel="stylesheet" href="gridcal.css" />
-  <link rel="stylesheet" href="promiseprompt.css" />
+<script src="numtodate_isodate.js"></script>
+<script src="makedimbg.js"></script>
 
-  <script src="showmonth.js"></script>
-  <script src="promiseprompt.js"></script>
-  <script src="numtodate_isodate.js"></script>
-  <script src="makedimbg.js"></script>
+<link rel="stylesheet" href="gridcalendar.css">
+<link rel="stylesheet" href="showmonth.css">
+<link rel="stylesheet" href="promiseprompt.css">
+<script src="promiseprompt.js"></script>
+<script src="showmonth.js"></script>
+<script src="showmonth_shadow.js"></script>
   <script src="gridcalendar.js"></script>
+  <script src="custom-thing.js"></script>
 </head>
 
 <body>
@@ -54,6 +56,7 @@
   <grid-cal data-locale="en" title="CALENDRA" precheck="testcal" reset="true"></grid-cal>
   <br />
 
+  <my-thing value="01101010" ></my-thing>
   <!-- <input type="checkbox" class="slider" id="ck" />CHECK<br /> -->
 
   <!-- <div id="out"></div> -->
@@ -61,6 +64,8 @@
 
   <clock-face></clock-face>
   <script>
+    let mt = document.querySelector("my-thing");
+    mt.returnfn = function(e) {console.log("ETURN function");}
     let gc = document.querySelector("grid-cal");
     let ck = document.querySelector("#ck");
 
