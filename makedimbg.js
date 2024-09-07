@@ -3,11 +3,11 @@
 // - useful for pulling attention to floating window
 // - onclickfn replaces click response
 // - alsofn runs in addition to default click response
-function makedimbg({ source, parentbox, before, onclickfn, fadetime = "0.35s", alsofn, opacity = 0.6, scroll} = {}) {
+function makedimbg({ source, parentbox, before, onclickfn, fadetime = "0.35s", alsofn, opacity = 0.6, scroll } = {}) {
   let dimbox;
 
   dimbox = document.createElement("div");
-  dimbox.style = "position:fixed;inset:0;background:#444;opacity:0;";
+  dimbox.style = "z-index:1;position:fixed;inset:0;background:#444;opacity:0;";
   dimbox.style.transition = `opacity ${fadetime} ease`;
 
   if (parentbox != null) {

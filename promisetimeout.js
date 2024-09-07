@@ -7,6 +7,14 @@ async function promisetimeout(timeout) {
   });
 }
 
+function waitforme(millisec) {
+  return new Promise(resolve => {
+    setTimeout(() => { resolve(''); }, millisec);
+  });
+}
+
+
+
 // how to use promisetimeout:
 // (async function promiseloop() {
 // 	for (let x = 0; x < 4; x++) {

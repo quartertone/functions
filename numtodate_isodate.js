@@ -13,7 +13,7 @@ function numtodate(date) {
 
 // - return yyyy-mm-dd format of date object
 function isodate(date) {
-  date ??= new Date();
+  date = date ? date : new Date();
   // date is Date object
   return date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, "0") + "-" + date.getDate().toString().padStart(2, "0");
 }
@@ -28,14 +28,14 @@ function datecalc(date, { years, months, days } = {}) {
 
   // adjust values
   if (years) y = parseInt(y) + years;
-  m = parseInt(m) -1;
+  m = parseInt(m) - 1;
   if (months) m += months;
   if (days) d = parseInt(d) + days;
 
   // create new date object (in case of month/year overflow
-  console.log("components:",y,m,d);
-  let newdate = new Date(y,m,d);
-  console.log("claced",date,months, newdate);
+  console.log("components:", y, m, d);
+  let newdate = new Date(y, m, d);
+  console.log("claced", date, months, newdate);
   return newdate;
 
   // return isodate format
@@ -45,7 +45,7 @@ function datecalc(date, { years, months, days } = {}) {
 // - return local time
 function timenow() {
   var d = new Date();
-  return { h: d.getHours().toString().padStart(2,"0"), m: d.getMinutes().toString().padStart(2,"0") };
+  return { h: d.getHours().toString().padStart(2, "0"), m: d.getMinutes().toString().padStart(2, "0") };
 }
 
 // - return time difference to the closest hour
@@ -75,7 +75,7 @@ function mstotime(milliseconds) {
 
 
 // - get name of weekday in specified locale (or default)
-function getwkday(n, locale="default",format="short") {
+function getwkday(n, locale = "default", format = "short") {
   // n is weekday number (0-6)
   let tempday = new Date();
   let currentDay = tempday.getDay();

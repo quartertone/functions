@@ -7,7 +7,7 @@
  * @param {string} promptText - Text for confirmation dialog
  */
 function downloaddata(data, name, ext, promptText) {
-  let exportfile = name + (new Date()).valueOf() + ext;
+  let exportfile = name + (new Date()).valueOf() + "." + ext;
   exportfile = prompt(promptText, exportfile);
   if (exportfile != null) {
     var element = document.createElement('a');
