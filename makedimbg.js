@@ -3,7 +3,7 @@
 // - useful for pulling attention to floating window
 // - onclickfn replaces click response
 // - alsofn runs in addition to default click response
-function makedimbg({ source, parentbox, before, onclickfn, fadetime = "0.35s", alsofn, opacity = 0.6, scroll } = {}) {
+function makedimbg({ source, parentbox, before, onclickfn, fadetime = "0.35s", alsofn, opacity = 0.6, scroll, noclick } = {}) {
   let dimbox;
 
   dimbox = document.createElement("div");
@@ -26,10 +26,18 @@ function makedimbg({ source, parentbox, before, onclickfn, fadetime = "0.35s", a
   }, 5);
 
 
+
+  if (!scroll && !onclickfn) {
+    // only enable escape key and no_scroll for default settings
+    window.addEventListener("keydown", doescape);
+    window.addEventListener("wheel", dontscroll, { passive: false });
+  }
+
+
   // if onclick function is set, use it instead.
   // NOTE: custom function must also manage the dimbox (eg let dimbg = makedimbg({onclickfn:functionname}); ----> functionname() {dimbg.remove()};
   onclickfn ??= function (e) {
-    e.preventDefault();
+    if (typeof (e) != "undefined") e.preventDefault();
 
     // if alsofn is set, do that ALSO
     if (alsofn instanceof Function) alsofn();
@@ -46,18 +54,17 @@ function makedimbg({ source, parentbox, before, onclickfn, fadetime = "0.35s", a
       if (source) source.remove();
     }, parseFloat(fadetime.replace(/s$/, "")) * 1100);
 
-
-  };
-
-  dimbox.onclick = dimbox.ontouch = function (e) {
-    onclickfn(e);
-    window.removeEventListener("wheel", dontscroll);
     window.removeEventListener("keydown", doescape);
+    window.removeEventListener("wheel", dontscroll);
   };
 
-  window.addEventListener("keydown", doescape);
-  window.addEventListener("wheel", dontscroll, { passive: false });
+  dimbox.onclickfn = onclickfn;
 
+  if (!noclick) {
+    dimbox.onclick = dimbox.ontouch = function (e) {
+      onclickfn(e);
+    };
+  }
 
   function dontscroll(e) {
     if (!scroll) e.preventDefault();
@@ -67,8 +74,8 @@ function makedimbg({ source, parentbox, before, onclickfn, fadetime = "0.35s", a
   function doescape(e) {
     if (e.key == "Escape") {
       e.preventDefault();
-      window.removeEventListener("wheel", dontscroll);
-      window.removeEventListener("keydown", doescape);
+      // window.removeEventListener("keydown", doescape);
+      // window.removeEventListener("wheel", dontscroll);
       onclickfn(e);
     } else if (e.code.match(/^(Arrow|Page|Space)/)) {
       // prevent scrolling the main webpage
