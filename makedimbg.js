@@ -25,14 +25,11 @@ function makedimbg({ source, parentbox, before, onclickfn, fadetime = "0.35s", a
     dimbox.style.opacity = opacity;
   }, 5);
 
-
-
   if (!scroll && !onclickfn) {
     // only enable escape key and no_scroll for default settings
     window.addEventListener("keydown", doescape);
     window.addEventListener("wheel", dontscroll, { passive: false });
   }
-
 
   // if onclick function is set, use it instead.
   // NOTE: custom function must also manage the dimbox (eg let dimbg = makedimbg({onclickfn:functionname}); ----> functionname() {dimbg.remove()};
@@ -83,7 +80,6 @@ function makedimbg({ source, parentbox, before, onclickfn, fadetime = "0.35s", a
       e.preventDefault();
     }
   }
-
 
   return dimbox;
 }
